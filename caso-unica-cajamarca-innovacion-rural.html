@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>El Índice de Cohesión Social — Chakakuna</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --ink:        #3D3D5B;
+    --ink-soft:   #3D3D5B;
+    --ink-ghost:  rgba(61,61,91,0.55);
+    --paper:      #FFFFFF;
+    --paper-2:    #F5F5F7;
+    --paper-3:    #EBEBED;
+    --rule:       rgba(61,61,91,0.12);
+    --rule-strong:rgba(61,61,91,0.32);
+    --pink:       #FF8DF4;
+    --orange:     #FDA946;
+    --mint:       #4DDFB8;
+    --lavender:   #B59EFF;
+    --accent:     var(--orange); /* case accent color */
+    --serif:      "Playfair Display", Georgia, serif;
+    --body:       "Manrope", system-ui, sans-serif;
+    --mono:       "Manrope", ui-monospace, monospace;
+    --edge-pad:   44px;
+  }
+  @media (max-width: 720px) { :root { --edge-pad: 20px; } }
+
+  body {
+    font-family: var(--body);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0; pointer-events: none; z-index: 200;
+    background-image: radial-gradient(rgba(61,61,91,0.06) 1px, transparent 1px);
+    background-size: 3px 3px;
+    mix-blend-mode: multiply;
+    opacity: 0.35;
+  }
+  a { color: inherit; text-decoration: none; }
+  h1,h2,h3,h4 { margin: 0; font-weight: 500; }
+  p { margin: 0; }
+  img { display: block; max-width: 100%; }
+
+  .wrap {
+    width: 100%; max-width: 1440px;
+    margin: 0 auto; padding: 0 var(--edge-pad);
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 24px;
+    padding: 18px var(--edge-pad);
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .brand {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700; letter-spacing: 0.12em; font-size: 15px;
+    color: var(--ink);
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: center; gap: 30px;
+    font-family: var(--body); font-size: 13.5px; font-weight: 500;
+  }
+  .nav a { opacity: 0.74; transition: opacity .15s; }
+  .nav a:hover { opacity: 1; color: var(--accent); }
+  .nav-right { display: flex; align-items: center; justify-content: flex-end; gap: 18px; }
+  .nav-lang {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+    color: var(--ink-soft); cursor: pointer; user-select: none;
+  }
+  .nav-lang [data-lang-btn].is-active { color: var(--ink); font-weight: 600; }
+  .footer-lang { color: color-mix(in srgb, var(--paper) 60%, transparent); }
+  .footer-lang [data-lang-btn].is-active { color: var(--paper); }
+  .nav-cta {
+    padding: 9px 16px; border: 1px solid var(--ink); border-radius: 999px;
+    font-family: var(--body); font-size: 13.5px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 8px; transition: all .15s;
+  }
+  .nav-cta:hover { background: var(--ink); color: var(--paper); }
+  @media (max-width: 900px) {
+    .topbar { grid-template-columns: 1fr auto; }
+    .nav, .nav-lang { display: none; }
+  }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb {
+    padding: 20px var(--edge-pad);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+    color: var(--ink-ghost); text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+    max-width: 1440px; margin: 0 auto;
+  }
+  .breadcrumb a { transition: color .15s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb-sep { opacity: 0.35; }
+
+  /* ── HERO ── */
+  .case-hero {
+    padding: 60px var(--edge-pad) 0;
+    max-width: 1440px; margin: 0 auto;
+    border-bottom: 1px solid var(--rule);
+  }
+  .case-meta-top {
+    display: flex; align-items: center; gap: 20px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-ghost);
+    margin-bottom: 28px;
+  }
+  .case-meta-top .client { color: var(--accent); font-weight: 600; }
+  .case-meta-top .dot { opacity: 0.3; }
+  .case-hero-title {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(44px, 6.5vw, 100px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    max-width: 18ch;
+    margin-bottom: 36px;
+  }
+  .case-hero-lede {
+    font-size: 19px; line-height: 1.6;
+    color: var(--ink-ghost); max-width: 60ch;
+    margin-bottom: 60px;
+  }
+  .case-cover {
+    width: 100%; aspect-ratio: 21/8;
+    overflow: hidden; background: var(--paper-3);
+    position: relative;
+  }
+  .case-cover img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.2) contrast(1.1);
+  }
+  .case-cover-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--ink) 0%, color-mix(in srgb, var(--accent) 40%, var(--ink)) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(242,237,228,0.4);
+  }
+
+  /* ── BODY LAYOUT ── */
+  .case-body {
+    max-width: 1440px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .case-sidebar {
+    padding: 72px 48px 72px var(--edge-pad);
+    border-right: 1px solid var(--rule);
+    position: sticky; top: 56px;
+    align-self: start;
+  }
+  .sidebar-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ink-ghost);
+    margin-bottom: 8px;
+  }
+  .sidebar-value {
+    font-size: 15px; color: var(--ink); margin-bottom: 28px; line-height: 1.4;
+  }
+  .sidebar-value.accent { color: var(--accent); font-weight: 500; }
+  .sidebar-tag {
+    display: inline-block;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 4px 10px;
+    border: 1px solid var(--rule-strong); border-radius: 2px;
+    color: var(--ink-ghost); margin: 0 4px 6px 0;
+  }
+  .case-content {
+    padding: 72px 64px 100px;
+  }
+  @media (max-width: 900px) {
+    .case-body { grid-template-columns: 1fr; }
+    .case-sidebar { position: static; border-right: none; border-bottom: 1px solid var(--rule); padding: 40px var(--edge-pad); }
+    .case-content { padding: 48px var(--edge-pad) 80px; }
+  }
+
+  /* ── EL RETO ── */
+  .reto {
+    margin-bottom: 72px;
+    padding-bottom: 72px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .reto-title {
+    font-family: 'Rubik', sans-serif; font-size: clamp(24px, 2.5vw, 36px);
+    font-weight: 700; letter-spacing: -0.01em; line-height: 1.15;
+    color: var(--ink); margin-bottom: 24px; max-width: 20ch;
+  }
+  .reto-body { font-size: 16px; line-height: 1.7; color: var(--ink-soft); max-width: 60ch; }
+  .reto-body p + p { margin-top: 16px; }
+
+  /* ── RESULTADO HIGHLIGHT ── */
+  .resultado {
+    background: var(--paper-2);
+    border-left: 3px solid var(--accent);
+    padding: 32px 36px;
+    margin-bottom: 72px;
+    font-size: 16px; line-height: 1.7; color: var(--ink-soft);
+    max-width: 65ch;
+  }
+
+  /* ── LO QUE HICIMOS ── */
+  .proceso { margin-bottom: 72px; }
+  .proceso-title {
+    font-family: 'Rubik', sans-serif; font-size: clamp(28px, 3vw, 44px);
+    font-weight: 700; letter-spacing: -0.01em;
+    color: var(--ink); margin-bottom: 56px;
+  }
+  .proceso-step {
+    display: grid; grid-template-columns: 48px 1fr;
+    gap: 28px; margin-bottom: 56px;
+    padding-bottom: 56px; border-bottom: 1px solid var(--rule);
+  }
+  .proceso-step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .step-num {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent); padding-top: 6px;
+  }
+  .step-body {}
+  .step-title {
+    font-family: 'Rubik', sans-serif; font-size: clamp(20px, 2vw, 28px);
+    font-weight: 700; letter-spacing: -0.01em; line-height: 1.2;
+    color: var(--ink); margin-bottom: 14px;
+  }
+  .step-text { font-size: 16px; line-height: 1.7; color: var(--ink-soft); max-width: 60ch; }
+  .step-img {
+    margin-top: 28px; overflow: hidden; background: var(--paper-3);
+    aspect-ratio: 16/7; display: flex; align-items: center; justify-content: center;
+  }
+  .step-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.15); }
+  .step-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-ghost);
+    border: 1px dashed var(--rule-strong);
+  }
+  .step-img-placeholder svg { opacity: 0.25; }
+  @media (max-width: 720px) {
+    .proceso-step { grid-template-columns: 1fr; gap: 12px; }
+  }
+
+  /* ── MÁS CASOS ── */
+  .mas-casos {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .mas-casos-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 40px;
+  }
+  .mas-casos-title {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-ghost);
+  }
+  .mas-casos-link {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+    transition: opacity .15s;
+  }
+  .mas-casos-link:hover { opacity: 0.7; }
+  .casos-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  }
+  .caso-card {
+    display: block; background: var(--paper-2);
+    overflow: hidden; position: relative;
+    transition: background .25s;
+    --card-accent: var(--mint);
+  }
+  .caso-card:nth-child(2) { --card-accent: var(--orange); }
+  .caso-card:hover { background: var(--card-accent); }
+  .caso-card-img {
+    aspect-ratio: 16/9; overflow: hidden; background: var(--paper-3);
+  }
+  .caso-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+  .caso-card:hover .caso-card-img img { transform: scale(1.04); }
+  .caso-card-info { padding: 24px 28px 32px; }
+  .caso-card-tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-ghost); margin-bottom: 10px;
+  }
+  .caso-card-title {
+    font-family: var(--serif); font-size: clamp(18px, 2vw, 26px);
+    font-weight: 500; letter-spacing: -0.02em; line-height: 1.15;
+    color: var(--ink); transition: color .2s;
+  }
+  .caso-card:hover .caso-card-title { color: var(--ink); }
+  .caso-card-arr {
+    margin-top: 16px; font-size: 18px; color: var(--ink-ghost);
+    transition: transform .2s, color .2s;
+  }
+  .caso-card:hover .caso-card-arr { transform: translateX(6px); color: var(--ink); }
+  @media (max-width: 720px) { .casos-grid { grid-template-columns: 1fr; } }
+
+  /* ── CONTACT ── */
+  .contact {
+    position: relative; background: var(--ink);
+    padding: 100px 0; overflow: hidden;
+  }
+  .contact::before {
+    content: ""; position: absolute; right: -8%; top: -20%;
+    width: 560px; height: 560px;
+    background: radial-gradient(circle at center, color-mix(in srgb, var(--pink) 40%, transparent), transparent 65%);
+    pointer-events: none;
+  }
+  .contact-grid {
+    position: relative;
+    display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: start;
+    max-width: 1440px; margin: 0 auto; padding: 0 var(--edge-pad);
+  }
+  .contact-title {
+    font-family: var(--serif); font-size: clamp(48px, 6vw, 88px);
+    font-weight: 500; letter-spacing: -0.03em; line-height: 0.95;
+    color: var(--paper); margin-bottom: 32px;
+  }
+  .contact-lede { color: rgba(242,237,228,0.65); font-size: 17px; line-height: 1.6; margin-bottom: 36px; }
+  .contact-lede em { color: var(--paper); font-style: normal; }
+  .contact-ctas { display: flex; flex-direction: column; gap: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em;
+    padding: 14px 22px; border: 1px solid rgba(242,237,228,0.3);
+    color: var(--paper); border-radius: 2px; transition: border-color .2s, background .2s; cursor: pointer;
+  }
+  .btn:hover { border-color: var(--paper); background: rgba(242,237,228,0.06); }
+  .btn-primary { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  .btn-primary:hover { background: var(--pink); border-color: var(--pink); color: var(--ink); }
+  .arr { font-style: normal; }
+  .contact-card {
+    background: rgba(242,237,228,0.06); border: 1px solid rgba(242,237,228,0.14);
+    border-radius: 2px; padding: 32px; margin-top: 12px;
+  }
+  .contact-card h4 {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(242,237,228,0.45);
+    margin-bottom: 24px; font-weight: 400;
+  }
+  .contact-row {
+    display: flex; justify-content: space-between; gap: 16px;
+    padding: 12px 0; border-bottom: 1px solid rgba(242,237,228,0.08); font-size: 14px;
+  }
+  .contact-row:last-child { border-bottom: none; }
+  .k { color: rgba(242,237,228,0.45); }
+  .v { color: rgba(242,237,228,0.8); text-align: right; }
+  .v a { border-bottom: 1px solid rgba(242,237,228,0.2); padding-bottom: 1px; transition: border-color .2s; }
+  .v a:hover { border-color: var(--paper); }
+  @media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(242,237,228,0.1);
+    padding: 20px 0;
+  }
+  .footer-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
+    color: rgba(242,237,228,0.4); flex-wrap: wrap; gap: 8px;
+  }
+  .footer-lang { cursor: pointer; }
+  /* ── EQUIPO DEL PROYECTO ── */
+  .caso-equipo {
+    padding: 72px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .caso-equipo-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 36px;
+  }
+  .caso-equipo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .caso-member {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .caso-member-photo {
+    width: 52px; height: 52px; border-radius: 50%;
+    overflow: hidden; background: var(--paper-3); flex-shrink: 0;
+  }
+  .caso-member-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.2); }
+  .caso-member-photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 16px; color: var(--ink-ghost);
+    background: var(--paper-3);
+  }
+  .caso-member-info {}
+  .caso-member-name {
+    font-family: 'Rubik', sans-serif; font-weight: 500; font-size: 14px;
+    color: var(--ink); line-height: 1.2;
+  }
+  .caso-member-role {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-ghost); margin-top: 2px;
+  }
+  .caso-member.is-lead .caso-member-name { color: var(--accent); }
+  .caso-member.is-lead .caso-member-photo { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .caso-member-divider {
+    width: 1px; height: 40px; background: var(--rule-strong);
+    margin: 0 8px; flex-shrink: 0;
+  }
+</style>
+</head>
+<body data-mode="paper">
+
+  <!-- ── TOPBAR ── -->
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Chakakuna">CHAKAKUNA</a>
+    <nav class="nav">
+      <a href="index.html#filosofia" data-i18n-es="Propósito" data-i18n-en="Purpose">Propósito</a>
+      <a href="index.html#servicios" data-i18n-es="Servicios" data-i18n-en="Services">Servicios</a>
+      <a href="index.html#casos" data-i18n-es="Casos" data-i18n-en="Cases">Casos</a>
+      <a href="about-us.html" data-i18n-es="Nosotras" data-i18n-en="About">Nosotras</a>
+    </nav>
+    <div class="nav-right">
+      <span class="nav-lang" id="langToggle" role="button" tabindex="0">
+        <b data-lang-btn="es">ES</b> / <span data-lang-btn="en">EN</span>
+      </span>
+      <a href="#contacto" class="nav-cta" data-i18n-es="Conversemos <span>→</span>" data-i18n-en="Let's talk <span>→</span>">Conversemos <span>→</span></a>
+    </div>
+  </header>
+
+  <!-- ── BREADCRUMB ── -->
+  <div class="breadcrumb wrap">
+    <a href="index.html#casos" data-i18n-es="← Volver a casos" data-i18n-en="← Back to cases">← Volver a casos</a>
+  </div>
+
+  <!-- ── CASE HERO ── -->
+  <div class="case-hero">
+    <div class="case-meta-top">
+      <span class="client">Newmont · ALAC</span>
+      <span class="dot">·</span>
+      <span data-i18n-es="Minería · Inversión social" data-i18n-en="Mining · Social investment">Minería · Inversión social</span>
+      <span class="dot">·</span>
+      <span>2024</span>
+    </div>
+    <h1 class="case-hero-title" data-i18n-es="CAJAMARCA ES ÚNICA" data-i18n-en="CAJAMARCA IS ÚNICA">CAJAMARCA ES ÚNICA</h1>
+    <p class="case-hero-lede" data-i18n-es="Evidenciando el impacto humano de 15 años de inversión comunal en Cajamarca, más allá de los indicadores financieros." data-i18n-en="Evidencing the human impact of 15 years of community investment in Cajamarca, beyond financial indicators.">Evidenciando el impacto humano de 15 años de inversión comunal en Cajamarca, más allá de los indicadores financieros.</p>
+    <div class="case-cover">
+      <img src="img/caso-unica-cajamarca.jpg" alt="Trabajo de campo en Cajamarca" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="case-cover-placeholder" style="display:none;">img/caso-unica-cajamarca.jpg</div>
+    </div>
+  </div>
+
+  <!-- ── CASE BODY ── -->
+  <div class="case-body">
+
+    <!-- Sidebar -->
+    <aside class="case-sidebar">
+      <div class="sidebar-label" data-i18n-es="Cliente" data-i18n-en="Client">Cliente</div>
+      <div class="sidebar-value accent">Newmont ALAC</div>
+
+      <div class="sidebar-label" data-i18n-es="Sector" data-i18n-en="Sector">Sector</div>
+      <div class="sidebar-value" data-i18n-es="Minería · Inversión social" data-i18n-en="Mining · Social investment">Minería · Inversión social</div>
+
+      <div class="sidebar-label" data-i18n-es="Territorio" data-i18n-en="Territory">Territorio</div>
+      <div class="sidebar-value">Cajamarca · Perú</div>
+
+      <div class="sidebar-label" data-i18n-es="Año" data-i18n-en="Year">Año</div>
+      <div class="sidebar-value">2024</div>
+
+      <div class="sidebar-label" data-i18n-es="Duración" data-i18n-en="Duration">Duración</div>
+      <div class="sidebar-value" data-i18n-es="12 semanas" data-i18n-en="12 weeks">12 semanas</div>
+
+      <div class="sidebar-label" data-i18n-es="Enfoque" data-i18n-en="Approach">Enfoque</div>
+      <div style="display:flex; flex-wrap: wrap; margin-top: 4px;">
+        <span class="sidebar-tag">Etnografía</span>
+        <span class="sidebar-tag">Diseño participativo</span>
+        <span class="sidebar-tag">Entrevista contextual</span>
+        <span class="sidebar-tag">Service Design</span>
+        <span class="sidebar-tag">POP-UP LAB</span>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <main class="case-content">
+
+      <!-- El reto -->
+      <div class="reto">
+        <div class="section-label" data-i18n-es="El reto" data-i18n-en="The challenge">El reto</div>
+        <h2 class="reto-title" data-i18n-es="Dimensionar 15 años de impacto" data-i18n-en="Measuring 15 years of impact">Dimensionar 15 años de impacto</h2>
+        <div class="reto-body">
+          <p data-i18n-es="Newmont-ALAC llevaba 15 años invirtiendo en el programa UNICA (Uniones de crédito y ahorro comunal en Cajamarca) con resultados financieros sólidos pero sin poder demostrar el impacto humano que lo sostenía." data-i18n-en="Newmont-ALAC had been investing for 15 years in the UNICA program (Community savings and credit unions in Cajamarca) with solid financial results but without being able to demonstrate the human impact that sustained it.">Newmont-ALAC llevaba 15 años invirtiendo en el programa UNICA (Uniones de crédito y ahorro comunal en Cajamarca) con resultados financieros sólidos pero sin poder demostrar el impacto humano que lo sostenía.</p>
+          <p data-i18n-es="Al acercarse a una evaluación formal, el cliente enfrentaba una pregunta difícil: ¿cómo justificas la próxima década de inversión cuando tus datos miden el dinero que se mueve pero no las vidas que cambian?" data-i18n-en="As a formal evaluation approached, the client faced a difficult question: how do you justify the next decade of investment when your data measures the money that moves but not the lives that change?">Al acercarse a una evaluación formal, el cliente enfrentaba una pregunta difícil: ¿cómo justificas la próxima década de inversión cuando tus datos miden el dinero que se mueve pero no las vidas que cambian?</p>
+        </div>
+      </div>
+
+      <!-- Resultado -->
+      <div class="resultado">
+        <div class="section-label" style="margin-bottom:14px;" data-i18n-es="El resultado" data-i18n-en="The result">El resultado</div>
+        <p data-i18n-es="El proyecto fortaleció el tejido comunitario de las UNICAs a través de una plataforma regional que impulsa el emprendimiento y la inclusión financiera, potenciando la conexión y el sentido de pertenencia entre los socios. Se convirtió en la base para el diseño del próximo ciclo estratégico de 10 años del programa UNICA." data-i18n-en="The project strengthened the community fabric of the UNICAs through a regional platform that drives entrepreneurship and financial inclusion, enhancing connection and belonging among members. It became the foundation for designing the next 10-year strategic cycle of the UNICA program.">El proyecto fortaleció el tejido comunitario de las UNICAs a través de una plataforma regional que impulsa el emprendimiento y la inclusión financiera, potenciando la conexión y el sentido de pertenencia entre los socios. Se convirtió en la base para el diseño del próximo ciclo estratégico de 10 años del programa UNICA.</p>
+      </div>
+
+      <!-- Lo que hicimos -->
+      <div class="proceso">
+        <h2 class="proceso-title" data-i18n-es="Lo que hicimos" data-i18n-en="What we did">Lo que hicimos</h2>
+
+        <div class="proceso-step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <h3 class="step-title" data-i18n-es="Inmersión en campo y Laboratorio Vivo" data-i18n-en="Field immersion and Living Lab">Inmersión en campo y Laboratorio Vivo</h3>
+            <p class="step-text" data-i18n-es="Rechazamos trabajar en remoto. Abrimos una casa en Cajamarca y la convertimos en el primer paso en un Laboratorio Vivo. Durante 15 días recibimos a líderes comunales, gerentes de proyecto y ejecutivos en un mismo espacio, sintetizando en tiempo real artefactos de campo, testimonios directos y mapeo territorial." data-i18n-en="We refused to work remotely. We opened a house in Cajamarca and turned it into the first step in a Living Lab. For 15 days we hosted community leaders, project managers, and executives in the same space, synthesizing in real time field artifacts, direct testimonies, and territorial mapping.">Rechazamos trabajar en remoto. Abrimos una casa en Cajamarca y la convertimos en el primer paso en un Laboratorio Vivo. Durante 15 días recibimos a líderes comunales, gerentes de proyecto y ejecutivos en un mismo espacio, sintetizando en tiempo real artefactos de campo, testimonios directos y mapeo territorial.</p>
+            <div class="step-img">
+              <img src="img/caso-unica-laboratorio.jpg" alt="Laboratorio vivo en Cajamarca" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class="step-img-placeholder" style="display:none;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                img/caso-unica-laboratorio.jpg
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="proceso-step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <h3 class="step-title" data-i18n-es="La escuela de Liderazgos positivos" data-i18n-en="The School of Positive Leadership">La escuela de Liderazgos positivos</h3>
+            <p class="step-text" data-i18n-es="Identificamos que las socias más sólidas no solo manejaban herramientas financieras: eran el tejido de confianza de su comunidad. Diseñamos una intervención para visibilizar y fortalecer ese liderazgo, dándoles un lenguaje y una plataforma para formar líderes cívicas capaces de navegar crisis de forma independiente." data-i18n-en="We identified that the strongest members didn't just manage financial tools: they were the trust fabric of their community. We designed an intervention to make that leadership visible and strengthen it, giving them a language and a platform to train civic leaders capable of navigating crises independently.">Identificamos que las socias más sólidas no solo manejaban herramientas financieras: eran el tejido de confianza de su comunidad. Diseñamos una intervención para visibilizar y fortalecer ese liderazgo, dándoles un lenguaje y una plataforma para formar líderes cívicas capaces de navegar crisis de forma independiente.</p>
+            <div class="step-img">
+              <img src="img/caso-unica-liderazgo.jpg" alt="Escuela de liderazgos" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class="step-img-placeholder" style="display:none;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                img/caso-unica-liderazgo.jpg
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="proceso-step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <h3 class="step-title" data-i18n-es="Museo de Impacto: de la donación a la transformación" data-i18n-en="Impact Museum: from donation to transformation">Museo de Impacto: de la donación a la transformación</h3>
+            <p class="step-text" data-i18n-es="Materializamos 15 años de trabajo en un Museo de Impacto: una narrativa estratégica y una hoja de ruta física que le permitió a Newmont pasar de una mentalidad de donación a una de transformación social. El impacto fue validado con más de 40 líderes comunitarios." data-i18n-en="We materialized 15 years of work into an Impact Museum: a strategic narrative and physical roadmap that allowed Newmont to shift from a donation mindset to one of social transformation. The impact was validated with more than 40 community leaders.">Materializamos 15 años de trabajo en un Museo de Impacto: una narrativa estratégica y una hoja de ruta física que le permitió a Newmont pasar de una mentalidad de donación a una de transformación social. El impacto fue validado con más de 40 líderes comunitarios.</p>
+            <div class="step-img">
+              <img src="img/caso-unica-museo.jpg" alt="Museo de Impacto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class="step-img-placeholder" style="display:none;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                img/caso-unica-museo.jpg
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /proceso -->
+
+      <!-- Equipo del proyecto -->
+      <div class="caso-equipo">
+        <div class="caso-equipo-label" data-i18n-es="Equipo del proyecto" data-i18n-en="Project team">Equipo del proyecto</div>
+
+        <!-- Row 1: leads -->
+        <div class="caso-equipo-grid" style="margin-bottom: 20px;">
+          <div class="caso-member is-lead">
+            <div class="caso-member-photo">
+              <img src="img/nicolas-vargas-ugalde-chakakuna.jpg" alt="Nicolás Vargas" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>NV</div>'">
+            </div>
+            <div class="caso-member-info">
+              <div class="caso-member-name">Nicolás Vargas</div>
+              <div class="caso-member-role" data-i18n-es="Líder de proyecto" data-i18n-en="Project lead">Líder de proyecto</div>
+            </div>
+          </div>
+
+          <div class="caso-member is-lead">
+            <div class="caso-member-photo">
+              <img src="img/lucero-cuba-chakakuna.jpg" alt="Lucero Cuba" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>LC</div>'">
+            </div>
+            <div class="caso-member-info">
+              <div class="caso-member-name">Lucero Cuba</div>
+              <div class="caso-member-role" data-i18n-es="Líder de proyecto" data-i18n-en="Project lead">Líder de proyecto</div>
+            </div>
+          </div>
+
+          <div class="caso-member is-lead">
+            <div class="caso-member-photo">
+              <div class="caso-member-photo-placeholder">NR</div>
+            </div>
+            <div class="caso-member-info">
+              <div class="caso-member-name">Nía Rodríguez</div>
+              <div class="caso-member-role" data-i18n-es="Líder de proyecto" data-i18n-en="Project lead">Líder de proyecto</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: members -->
+        <div class="caso-equipo-grid" style="padding-top: 20px; border-top: 1px solid var(--rule);">
+          <div class="caso-member">
+            <div class="caso-member-photo">
+              <img src="img/ella-gonez-chakakuna.jpg" alt="Ella Goñez" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>EG</div>'">
+            </div>
+            <div class="caso-member-info">
+              <div class="caso-member-name">Ella Goñez</div>
+              <div class="caso-member-role" data-i18n-es="Investigadora Sr." data-i18n-en="Sr. Researcher">Investigadora Sr.</div>
+            </div>
+          </div>
+
+          <div class="caso-member">
+            <div class="caso-member-photo">
+              <img src="img/brenda-alvarez-chakakuna.jpg" alt="Brenda Álvarez" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>BA</div>'">
+            </div>
+            <div class="caso-member-info">
+              <div class="caso-member-name">Brenda Álvarez</div>
+              <div class="caso-member-role" data-i18n-es="Design Lead" data-i18n-en="Design Lead">Design Lead</div>
+            </div>
+          </div>
+
+          <div class="caso-member">
+            <div class="caso-member-photo">
+              <img src="img/melanie-lopez-del-pozo-chakakuna.jpg" alt="Melanie López" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>ML</div>'">
+            </div>
+            <div class="caso-member-info">
+              <div class="caso-member-name">Melanie López del Pozo</div>
+              <div class="caso-member-role" data-i18n-es="Research Lead" data-i18n-en="Research Lead">Research Lead</div>
+            </div>
+          </div>
+
+          <div class="caso-member">
+            <div class="caso-member-photo">
+              <img src="img/ana-paula-lopez-chakakuna.jpg" alt="Ana Paula López" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>AP</div>'">
+            </div>
+            <div class="caso-member-info">
+              <div class="caso-member-name">Ana Paula López</div>
+              <div class="caso-member-role" data-i18n-es="Investigadora Sr." data-i18n-en="Sr. Researcher">Investigadora Sr.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ── MÁS CASOS ── -->
+  <section class="mas-casos">
+    <div class="wrap">
+      <div class="mas-casos-head">
+        <span class="mas-casos-title" data-i18n-es="Más casos" data-i18n-en="More cases">Más casos</span>
+        <a href="index.html#casos" class="mas-casos-link" data-i18n-es="Ver todos →" data-i18n-en="View all →">Ver todos →</a>
+      </div>
+      <div class="casos-grid">
+        <a href="#" class="caso-card">
+          <div class="caso-card-img">
+            <img src="img/retail-ferreterias-2024-chakakuna.jpg" alt="La paradoja de la visibilidad" onerror="this.parentNode.style.background='var(--paper-3)'">
+          </div>
+          <div class="caso-card-info">
+            <div class="caso-card-tag" data-i18n-es="Comercio informal · 2024" data-i18n-en="Informal commerce · 2024">Comercio informal · 2024</div>
+            <div class="caso-card-title" data-i18n-es="La paradoja de la visibilidad" data-i18n-en="The visibility paradox">La paradoja de la visibilidad</div>
+            <div class="caso-card-arr">↗</div>
+          </div>
+        </a>
+        <a href="#" class="caso-card">
+          <div class="caso-card-img">
+            <img src="img/oxfam-redes-cuidado-2025-chakakuna.jpg" alt="Redes que el Estado no ve" onerror="this.parentNode.style.background='var(--paper-3)'">
+          </div>
+          <div class="caso-card-info">
+            <div class="caso-card-tag" data-i18n-es="Cooperación · 2025" data-i18n-en="Cooperation · 2025">Cooperación · 2025</div>
+            <div class="caso-card-title" data-i18n-es="Redes que el Estado no ve" data-i18n-en="Networks the State does not see">Redes que el Estado no ve</div>
+            <div class="caso-card-arr">↗</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section class="contact" id="contacto">
+    <div class="contact-grid">
+      <div>
+        <h2 class="contact-title" data-i18n-es="Conversemos." data-i18n-en="Let's talk.">Conversemos.</h2>
+        <p class="contact-lede" data-i18n-es="Escríbenos lo que tú o tu equipo tienen en mente. No tiene que ser muy claro. Te respondemos en menos de <em>24 horas.</em> Sin formularios, sin presentaciones acartonadas." data-i18n-en="Write us what you or your team have in mind. It doesn't need to be fully formed. We reply in under <em>24 hours.</em> No forms, no stiff pitch decks.">Escríbenos lo que tú o tu equipo tienen en mente. No tiene que ser muy claro. Te respondemos en menos de <em>24 horas.</em> Sin formularios, sin presentaciones acartonadas.</p>
+        <div class="contact-ctas">
+          <a href="mailto:hola@chakakuna.com" class="btn btn-primary" data-i18n-es="Escribir a hola@chakakuna.com <span class='arr'>→</span>" data-i18n-en="Write to hola@chakakuna.com <span class='arr'>→</span>">Escribir a hola@chakakuna.com <span class="arr">→</span></a>
+          <a href="#" class="btn" data-i18n-es="Descargar portafolio <span class='arr'>↓</span>" data-i18n-en="Download portfolio <span class='arr'>↓</span>">Descargar portafolio <span class="arr">↓</span></a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <h4 data-i18n-es="Dónde nos encuentras" data-i18n-en="Where to find us">Dónde nos encuentras</h4>
+        <div class="contact-row"><span class="k" data-i18n-es="Estudio" data-i18n-en="Studio">Estudio</span><span class="v" data-i18n-es="Los Olivos · Lima · Perú" data-i18n-en="Los Olivos · Lima · Peru">Los Olivos · Lima · Perú</span></div>
+        <div class="contact-row"><span class="k" data-i18n-es="Correo electrónico" data-i18n-en="Email">Correo electrónico</span><span class="v">hola@chakakuna.com</span></div>
+        <div class="contact-row"><span class="k">LinkedIn</span><span class="v"><a href="https://www.linkedin.com/company/chakakuna/" target="_blank" rel="noopener">in/chakakuna</a></span></div>
+        <div class="contact-row"><span class="k">Instagram</span><span class="v"><a href="https://www.instagram.com/chakakuna_/" target="_blank" rel="noopener">ig/chakakuna_</a></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="wrap footer-row">
+      <div><b>Chakakuna</b> — <span data-i18n-es="Estudio de investigación aplicada" data-i18n-en="Applied research studio">Estudio de investigación aplicada</span> © 2026</div>
+      <div>Lima · <span data-i18n-es="Perú · fundado 2021" data-i18n-en="Peru · founded 2021">Perú · fundado 2021</span></div>
+      <div><span class="nav-lang footer-lang" id="langToggleFooter" role="button" tabindex="0"><b data-lang-btn="es">ES</b> / <span data-lang-btn="en">EN</span></span> · <span data-i18n-es="Legales · Privacidad" data-i18n-en="Legal · Privacy">Legales · Privacidad</span></div>
+    </div>
+  </footer>
+
+  <!-- ── i18n ── -->
+  <script>
+  (function () {
+    function setLang(lang) {
+      const useEN = lang === 'en';
+      document.querySelectorAll('[data-i18n-es]').forEach(el => {
+        const val = el.getAttribute(useEN ? 'data-i18n-en' : 'data-i18n-es');
+        if (val !== null) el.innerHTML = val;
+      });
+      document.documentElement.lang = useEN ? 'en' : 'es';
+      document.querySelectorAll('#langToggle, #langToggleFooter').forEach(tog => {
+        tog.querySelectorAll('[data-lang-btn]').forEach(b => {
+          b.classList.toggle('is-active', b.dataset.langBtn === (useEN ? 'en' : 'es'));
+        });
+      });
+      try { localStorage.setItem('ckLang', useEN ? 'en' : 'es'); } catch(e){}
+    }
+
+    function init() {
+      let saved = 'es';
+      try { saved = localStorage.getItem('ckLang') || 'es'; } catch(e){}
+      setLang(saved);
+      document.querySelectorAll('#langToggle, #langToggleFooter').forEach(tog => {
+        tog.addEventListener('click', () => {
+          setLang(document.documentElement.lang === 'es' ? 'en' : 'es');
+        });
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  })();
+  </script>
+
+</body>
+</html>
