@@ -736,12 +736,14 @@
   .case:nth-of-type(2) .case-img .wash { background: linear-gradient(135deg, var(--mint), var(--ink)); }
   .case:nth-of-type(3) .case-img .wash { background: linear-gradient(135deg, var(--orange), var(--ink)); }
   .case:nth-of-type(4) .case-img .wash { background: linear-gradient(135deg, var(--mint), var(--ink)); }
+  .case:nth-of-type(5) .case-img .wash { background: linear-gradient(135deg, var(--orange), var(--ink)); }
 
   /* Per-case accent override — swaps dot + hover title color to match each case's wash */
   .case:nth-of-type(1) { --accent: var(--orange); }
   .case:nth-of-type(2) { --accent: var(--mint); }
   .case:nth-of-type(3) { --accent: var(--orange); }
   .case:nth-of-type(4) { --accent: var(--mint); }
+  .case:nth-of-type(5) { --accent: var(--orange); }
 
   .case-img .tag {
     position: absolute; left: 14px; bottom: 12px;
@@ -896,12 +898,24 @@
   .team-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 18px 18px;
+    column-gap: 18px;
+    /* 4 sub-rows per visual row: photo · firstname · lastname · role */
+    grid-auto-rows: auto;
+    row-gap: 0;
   }
-  .member {
-    display: flex; flex-direction: column;
-    gap: 10px;
+  .member, a.member {
+    text-decoration: none;
+    color: inherit;
+    /* each card spans 4 row tracks and uses subgrid to share them */
+    grid-row: span 4;
+    display: grid;
+    grid-template-rows: subgrid;
+    margin-bottom: 32px;
   }
+  .m-photo      { align-self: stretch; }
+  .m-firstname  { align-self: end; padding-top: 10px; }
+  .m-lastname   { align-self: start; padding-top: 2px; }
+  .m-role       { align-self: start; padding-top: 6px; }
   .m-photo {
     position: relative;
     aspect-ratio: 3/4;
@@ -942,12 +956,32 @@
     color: var(--ink);
     line-height: 1.1;
   }
-  .m-role {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.14em;
+  .m-firstname {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--ink-soft);
+    color: var(--ink);
+    line-height: 1.05;
+  }
+  .m-lastname {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1.05;
+    margin-bottom: 6px;
+  }
+  .m-role {
+    font-family: var(--body);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink-ghost);
   }
   .m-focus {
     font-family: var(--body);
@@ -1399,10 +1433,7 @@
         const role = (m.querySelector('.m-role') || {}).textContent || '';
         return role.includes('Fundadora') || role.includes('Fundador');
       });
-      const pinLast   = members.filter(m => {
-        const role = (m.querySelector('.m-role') || {}).textContent || '';
-        return role.includes('Practicante') || role.includes('asociada');
-      });
+      const pinLast   = members.filter(m => m.classList.contains('member-open'));
       const middle = members.filter(m => !pinFirst.includes(m) && !pinLast.includes(m));
 
       shuffle(middle);
@@ -1607,7 +1638,7 @@
       <header class="sec-head">
         <div class="num-tag">00 · Propósito</div>
         <h2 class="sec-title">
-          Construimos <em>puentes</em> entre la realidad del territorio y la decisión de diseño.
+          Construimos <em>puentes</em> entre la realidad del territorio y la decisión de diseño
         </h2>
       </header>
 
@@ -1636,7 +1667,7 @@
       <header class="sec-head">
         <div class="num-tag">01 · Servicios</div>
         <h2 class="sec-title">
-          Cuatro formas de trabajar juntos para generar <em>evidencia.</em>
+          Cuatro formas de trabajar juntos para generar <em>evidencia</em>
         </h2>
       </header>
 
@@ -1644,9 +1675,9 @@
         <article class="svc">
           <div class="svc-num">S / 01</div>
           <h3 class="svc-title">Design <em>Research</em></h3>
-          <div class="svc-kicker">Investigación profunda</div>
+          <div class="svc-kicker">Ir hacia las personas</div>
           <p class="svc-body">
-            Investigación profunda sobre usuarios, comportamientos y contextos para informar decisiones de negocio y producto. Vamos al territorio a recoger la evidencia que las encuestas y los dashboards no pueden ver.
+            Cuando las encuestas no explican por qué la gente hace lo que hace, vamos al territorio. Recogemos la evidencia que vive en los comportamientos, los contextos y las conversaciones reales.
           </p>
           <p class="svc-tags">
             <span>Etnografía</span>
@@ -1661,7 +1692,7 @@
           <h3 class="svc-title">Strategic <em>Foresight</em></h3>
           <div class="svc-kicker">Anticipar, no reaccionar</div>
           <p class="svc-body">
-            Investigamos para que las organizaciones no reaccionen al futuro, sino que lo anticipen. Combinamos mapeo de señales, análisis de tendencias y marcos propios para convertir la incertidumbre en oportunidades estratégicas concretas.
+            Cuando la incertidumbre paraliza la estrategia, mapeamos señales y construimos escenarios concretos. Para que las decisiones se tomen con visión, y no solo sentido de urgencia.
           </p>
           <p class="svc-tags">
             <span>Mapeo de señales</span>
@@ -1673,9 +1704,9 @@
         <article class="svc">
           <div class="svc-num">S / 03</div>
           <h3 class="svc-title">Concept <em>Testing</em></h3>
-          <div class="svc-kicker">Probar donde importa</div>
+          <div class="svc-kicker">Probar antes de invertir</div>
           <p class="svc-body">
-            Diseñamos prototipos y testeamos soluciones con usuarios reales antes de escalarlas. Incorporamos principios de diseño conductual para que lo que se lanza al mercado ya haya sido probado donde importa: en la realidad.
+            Cuando una idea prometedora necesita validación antes de escalar, la llevamos a la realidad. Diseñamos y testeamos prototipos físicos y digitales con usuarios reales, con principios conductuales incorporados desde el inicio.
           </p>
           <p class="svc-tags">
             <span>Nudges conductuales</span>
@@ -1686,14 +1717,16 @@
 
         <article class="svc">
           <div class="svc-num">S / 04</div>
-          <h3 class="svc-title">Impact <em>Exploration</em></h3>
-          <div class="svc-kicker">Descubrir lo invisible</div>
+          <h3 class="svc-title">Capability <em>Building</em></h3>
+          <div class="svc-kicker">Aprendizaje que se queda adentro</div>
           <p class="svc-body">
-            Investigación cualitativa para descubrir qué está impactando realmente un producto o servicio: incluyendo variables que la organización no sabía que existían. Complementa y precede a las evaluaciones de impacto tradicionales.
+            Cuando los equipos quieren aprender haciendo, diseñamos la experiencia para formar capacidades con problemas reales. Desde sesiones de inspiración de 2 horas hasta sprints de investigación de 2 semanas.
           </p>
           <p class="svc-tags">
-            <span>Investigación cualitativa</span>
-            <span>Evaluación etnográfica</span>
+            <span>Boosts 2h</span>
+            <span>Workshops 1 día</span>
+            <span>Sprints 4 días</span>
+            <span>Cursos remotos</span>
           </p>
         </article>
       </div>
@@ -1708,7 +1741,7 @@
       <header class="sec-head">
         <div class="num-tag">02 · Clientes</div>
         <h2 class="sec-title">
-          Organizaciones que <em>confían en nuestro trabajo.</em>
+          Organizaciones que <em>confían en nuestro trabajo</em>
         </h2>
       </header>
     </div>
@@ -1748,36 +1781,35 @@
       <header class="sec-head">
         <div class="num-tag">03 · Casos</div>
         <h2 class="sec-title">
-          Proyectos en la intersección de <em>investigación, innovación e impacto.</em>
+          Proyectos en la intersección de <em>investigación, innovación e impacto</em>
         </h2>
       </header>
 
-      <article class="case">
+      <article class="case" style="cursor:pointer;" onclick="location.href='caso-unica-cajamarca-innovacion-rural.html'">
         <div class="case-meta">
-          <b>2025</b><br/>
-          Sector cooperación<br/>
-          Oxfam · Perú<br/><br/>
-          <b>Equipo</b><br/>
-          5 investigadoras<br/>
-          14 semanas
+          <b>2024</b><br/>
+          Minería · Inversión social<br/>
+          Newmont · ALAC<br/><br/>
+          <b>Resultado</b><br/>
+          Data para evaluación<br/>
+          de impacto y levantamiento de fondos
         </div>
         <div class="case-text">
-          <div class="case-client">Oxfam · Perú</div>
-          <h3 class="case-title">Infraestructuras de cuidado</h3>
+          <div class="case-client">Newmont · ALAC</div>
+          <h3 class="case-title">Exploración de impacto en Cajamarca</h3>
           <p class="case-excerpt">
-            Mapeo etnográfico de infraestructuras informales de cuidado en tres regiones andinas. Convertimos 214 historias en un argumento para rediseñar la política pública de transferencias condicionadas.
+            Evidenciamos el impacto de 15 años de inversión en Cajamarca, visitando a las comunidades en el lugar donde enfrentan los retos de la gestión financiera y deciden el rumbo de sus propios emprendimientos. Un modelo para escalar el desarrollo rural.
           </p>
           <div class="case-foot">
-            <span class="chip">Etnografía</span>
-            <span class="chip">Política pública</span>
-            <span class="chip">Campo extendido</span>
+            <span class="chip">Innovación social</span>
+            <span class="chip">Investigación rural</span>
+            <span class="chip">Minería</span>
           </div>
         </div>
         <div class="case-img">
-          <img loading="lazy" src="img/oxfam-redes-de-cuidado-chakakuna.jpg" alt="Investigación etnográfica Oxfam Perú — Chakakuna">
+          <img loading="lazy" src="img/unica-desarrollo-innovacion-rural-chakakuna.jpg" alt="Trabajo de campo en Cajamarca — Chakakuna">
           <div class="wash"></div>
           <div class="halftone"></div>
-          <span class="tag">01 · Comunidades altoandinas</span>
         </div>
       </article>
 
@@ -1787,14 +1819,14 @@
           Sector fintech / seguros<br/>
           Confidencial · Lima<br/><br/>
           <b>Resultado</b><br/>
-          Roadmap aprobado<br/>
-          +3 productos
+          Roadmap de exploración<br/>
+          + 2 prototipos testeados
         </div>
         <div class="case-text">
           <div class="case-client">Cliente confidencial · Lima</div>
           <h3 class="case-title">La economía secreta de los niños</h3>
           <p class="case-excerpt">
-            Diseño conductual y educación financiera para menores de 8 a 13 años. Balanceamos el control parental con la autonomía, y entregamos al directorio los escenarios regulatorios para cada camino.
+            Exploramos las prácticas cotidianas de familias con hijos de 8 a 15 años para imaginarnos juntos el futuro del dinero digital. Un roadmap construido desde la autonomía.
           </p>
           <div class="case-foot">
             <span class="chip">Behavioral design</span>
@@ -1806,7 +1838,6 @@
           <img loading="lazy" src="img/fintech-futuras-generaciones-chakakuna.jpg" alt="Investigación fintech futuras generaciones — Chakakuna">
           <div class="wash"></div>
           <div class="halftone"></div>
-          <span class="tag">02 · Cocinas familiares</span>
         </div>
       </article>
 
@@ -1815,15 +1846,15 @@
           <b>2024</b><br/>
           Sector salud pública<br/>
           Equimundo · LATAM<br/><br/>
-          <b>Cobertura</b><br/>
-          3 regiones<br/>
-          18 comunidades
+          <b>Resultado</b><br/>
+          Producto rediseñado<br/>
+          para latinoamérica
         </div>
         <div class="case-text">
           <div class="case-client">Equimundo · LATAM</div>
           <h3 class="case-title">Nuevas conversaciones entre padres e hijos</h3>
           <p class="case-excerpt">
-            Adaptación cultural de una herramienta global para promover masculinidades saludables en familias latinoamericanas. La versión peruana es hoy la base del protocolo regional.
+            Rediseñamos una herramienta (las tarjetas de conversación de Boyhood Initiative) para que funcione en las casas latinoamericanas, iterando y testeando con familias de 6 países. Un protocolo para nuevas masculinidades.
           </p>
           <div class="case-foot">
             <span class="chip">Adaptación cultural</span>
@@ -1835,7 +1866,6 @@
           <img loading="lazy" src="img/equimundo-boyhood-initiative-chakakuna.jpg" alt="Investigación salud pública Equimundo LATAM — Chakakuna">
           <div class="wash"></div>
           <div class="halftone"></div>
-          <span class="tag">03 · Centros de salud</span>
         </div>
       </article>
 
@@ -1844,15 +1874,14 @@
           <b>2024</b><br/>
           Sector retail popular<br/>
           Makers 150 · Perú<br/><br/>
-          <b>Muestra</b><br/>
-          150 negocios<br/>
-          Lima Norte
+          <b>Resultado</b><br/>
+          Arquetipos de usuarios
         </div>
         <div class="case-text">
           <div class="case-client">Makers 150 · Perú</div>
           <h3 class="case-title">Inseguridad urbana y negocios invisibles</h3>
           <p class="case-excerpt">
-            Diseñamos ecosistemas digitales para ferreteros de barrio priorizando seguridad y bajo perfil frente al riesgo. La categoría "invisibilidad productiva" hoy orienta la estrategia.
+            Mapeamos la lógica invisible del retail minorista (ferreterías en Lima y 2 regiones), considerando el contexto de inseguridad ciudadana y las historias de las familias. Una categoría nueva: la invisibilidad como estrategia comercial.
           </p>
           <div class="case-foot">
             <span class="chip">Comercio informal</span>
@@ -1864,7 +1893,33 @@
           <img loading="lazy" src="img/retail-ferreterias-chakakuna.jpg" alt="Investigación retail ferreterías Lima — Chakakuna">
           <div class="wash"></div>
           <div class="halftone"></div>
-          <span class="tag">04 · Ferreterías de barrio</span>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-meta">
+          <b>2025</b><br/>
+          Sector cooperación<br/>
+          Oxfam · Perú<br/><br/>
+          <b>Resultado</b><br/>
+          Policy brief
+        </div>
+        <div class="case-text">
+          <div class="case-client">Oxfam · Perú</div>
+          <h3 class="case-title">Infraestructuras de cuidado</h3>
+          <p class="case-excerpt">
+            Convertimos historias de cuidado en argumentos para diseñar políticas públicas que vayan más allá de los indicadores de transferencias. Un policy brief construido desde adentro.
+          </p>
+          <div class="case-foot">
+            <span class="chip">Etnografía</span>
+            <span class="chip">Política pública</span>
+            <span class="chip">Campo extendido</span>
+          </div>
+        </div>
+        <div class="case-img">
+          <img loading="lazy" src="img/oxfam-redes-de-cuidado-chakakuna.jpg" alt="Investigación etnográfica Oxfam Perú — Chakakuna">
+          <div class="wash"></div>
+          <div class="halftone"></div>
         </div>
       </article>
     </div>
@@ -1902,110 +1957,99 @@
       <header class="sec-head">
         <div class="num-tag">04 · Nosotras</div>
         <h2 class="sec-title">
-          Somos una empresa de investigación <em style="color: var(--ink);">imaginada y dirigida por investigadoras.</em>
+          Somos una empresa de investigación <em style="color: var(--ink);">imaginada y dirigida por investigadoras</em>
         </h2>
       </header>
 
       <div class="team-grid">
-        <div class="member">
+        <a class="member" href="https://www.linkedin.com/in/lucero-cuba/" target="_blank" rel="noopener">
           <div class="m-photo"><img loading="lazy" src="img/lucero-cuba-chakakuna.JPG" alt="Lucero Cuba — Chakakuna"><div class="wash"></div><div class="halftone"></div></div>
-          <div class="m-name">Lucero Cuba</div>
-          <div class="m-role">Fundadora &amp; CEO · Sociología</div>
-          <div class="m-focus">Análisis de datos</div>
-        </div>
-        <div class="member">
+          <div class="m-firstname">Lucero</div>
+          <div class="m-lastname">Cuba</div>
+          <div class="m-role">Fundadora &amp; CEO</div>
+        </a>
+        <a class="member" href="https://www.linkedin.com/in/deyra-de-la-torre/" target="_blank" rel="noopener">
           <div class="m-photo"><img loading="lazy" src="img/deyra-de-la-torre-chakakuna.png" alt="Deyra de la Torre — Chakakuna"><div class="wash"></div><div class="halftone"></div></div>
-          <div class="m-name">Deyra de la Torre</div>
-          <div class="m-role">Investigadora Sr · Antropología</div>
-          <div class="m-focus">Innovación con impacto</div>
-        </div>
-        <div class="member">
+          <div class="m-firstname">Deyra</div>
+          <div class="m-lastname">de la Torre</div>
+          <div class="m-role">Investigadora</div>
+        </a>
+        <a class="member" href="https://www.linkedin.com/in/melachay/" target="_blank" rel="noopener">
           <div class="m-photo"><img loading="lazy" src="img/melanie-lopez-del-pozo-chakakuna.jpg" alt="Melanie López del Pozo — Chakakuna"><div class="wash"></div><div class="halftone"></div></div>
-          <div class="m-name">Melanie López del Pozo</div>
-          <div class="m-role">Diseñadora Sr · Filosofía &amp; Comunicaciones</div>
-          <div class="m-focus">Experiencia de usuarios &amp; Culturas digitales</div>
-        </div>
-        <div class="member">
+          <div class="m-firstname">Melanie</div>
+          <div class="m-lastname">López del Pozo</div>
+          <div class="m-role">Diseñadora</div>
+        </a>
+        <a class="member" href="https://www.linkedin.com/in/brenda-alvarez-alvarez-pe/" target="_blank" rel="noopener">
           <div class="m-photo"><img loading="lazy" src="img/brenda-alvarez-chakakuna.png" alt="Brenda Álvarez — Chakakuna"><div class="wash"></div><div class="halftone"></div></div>
-          <div class="m-name">Brenda Álvarez</div>
-          <div class="m-role">Estratega Sr · Derecho</div>
-          <div class="m-focus">Diversidad, Equidad e Inclusión</div>
-        </div>
-        <div class="member">
+          <div class="m-firstname">Brenda</div>
+          <div class="m-lastname">Álvarez</div>
+          <div class="m-role">Estratega creativa</div>
+        </a>
+        <a class="member" href="https://www.linkedin.com/in/lalcme/" target="_blank" rel="noopener">
           <div class="m-photo"><img loading="lazy" src="img/luz-alcantara-chakakuna.png" alt="Luz Alcantara — Chakakuna"><div class="wash"></div><div class="halftone"></div></div>
-          <div class="m-name">Luz Alcantara</div>
-          <div class="m-role">Diseñadora Sr · Diseño Industrial &amp; Antropología visual</div>
-          <div class="m-focus">Diseño de productos</div>
-        </div>
-        <div class="member">
+          <div class="m-firstname">Luz</div>
+          <div class="m-lastname">Alcantara</div>
+          <div class="m-role">Diseñadora</div>
+        </a>
+        <a class="member" href="https://www.linkedin.com/in/ella-go%C3%B1ez-fernandez-658423215/" target="_blank" rel="noopener">
           <div class="m-photo"><img loading="lazy" src="img/ella-gonez-chakakuna.png" alt="Ella Goñez — Chakakuna"><div class="wash"></div><div class="halftone"></div></div>
-          <div class="m-name">Ella Goñez</div>
-          <div class="m-role">Investigador Sr · Ciencia Política</div>
-          <div class="m-focus">Experiencia de usuarios &amp; Políticas públicas</div>
-        </div>
-        <div class="member">
+          <div class="m-firstname">Ella</div>
+          <div class="m-lastname">Goñez</div>
+          <div class="m-role">Investigador</div>
+        </a>
+        <a class="member" href="https://www.linkedin.com/in/elena-f-25a63a124/" target="_blank" rel="noopener">
           <div class="m-photo"><img loading="lazy" src="img/elena-flores-chakakuna.png" alt="Elena Flores — Chakakuna"><div class="wash"></div><div class="halftone"></div></div>
-          <div class="m-name">Elena Flores</div>
-          <div class="m-role">Investigadora · Ciencia Política</div>
-          <div class="m-focus">Análisis de datos</div>
-        </div>
-        <div class="member">
+          <div class="m-firstname">Elena</div>
+          <div class="m-lastname">Flores</div>
+          <div class="m-role">Investigadora</div>
+        </a>
+        <a class="member" href="https://www.linkedin.com/in/rosahuamanipucho/" target="_blank" rel="noopener">
           <div class="m-photo"><img loading="lazy" src="img/rosa-huamani-chakakuna.png" alt="Rosa Huamaní — Chakakuna"><div class="wash"></div><div class="halftone"></div></div>
-          <div class="m-name">Rosa Huamaní</div>
-          <div class="m-role">Investigadora Jr · Ciencia Política</div>
-          <div class="m-focus">Desarrollo regional</div>
-        </div>
-        <div class="member">
+          <div class="m-firstname">Rosa</div>
+          <div class="m-lastname">Huamaní</div>
+          <div class="m-role">Investigadora</div>
+        </a>
+        <a class="member" href="https://www.linkedin.com/in/dessir%C3%A9e-abigail-padilla-mateo/" target="_blank" rel="noopener">
           <div class="m-photo"><img loading="lazy" src="img/abigail-padilla-chakakuna.png" alt="Abigail Padilla — Chakakuna"><div class="wash"></div><div class="halftone"></div></div>
-          <div class="m-name">Abigail Padilla</div>
-          <div class="m-role">Diseñadora Jr · Diseño Industrial</div>
-          <div class="m-focus">Experiencia de usuarios</div>
-        </div>
-        <div class="member">
+          <div class="m-firstname">Abigail</div>
+          <div class="m-lastname">Padilla</div>
+          <div class="m-role">Diseñadora</div>
+        </a>
+        <a class="member" href="https://www.linkedin.com/in/nicolas-vargas-ugalde/" target="_blank" rel="noopener">
           <div class="m-photo"><img loading="lazy" src="img/nicolas-vargas-ugalde-chakakuna.jpg" alt="Nicolás Vargas Ugalde — Chakakuna"><div class="wash"></div><div class="halftone"></div></div>
-          <div class="m-name">Nicolás Vargas</div>
-          <div class="m-role">Fundador · Lingüística</div>
-          <div class="m-focus">Investigación aplicada &amp; Storytelling</div>
-        </div>
-        <div class="member">
+          <div class="m-firstname">Nicolás</div>
+          <div class="m-lastname">Vargas</div>
+          <div class="m-role">Fundador</div>
+        </a>
+        <a class="member" href="https://www.linkedin.com/in/ana-paula-lopez-minchan/" target="_blank" rel="noopener">
           <div class="m-photo"><img loading="lazy" src="img/ana-paula-lopez-chakakuna.jpeg" alt="Ana Paula Lopez — Chakakuna"><div class="wash"></div><div class="halftone"></div></div>
-          <div class="m-name">Ana Paula Lopez</div>
-          <div class="m-role">Investigadora Sr · Geografía &amp; Gestión de recursos hídricos</div>
-          <div class="m-focus">Sostenibilidad &amp; Innovación social</div>
-        </div>
-        <div class="member">
+          <div class="m-firstname">Ana Paula</div>
+          <div class="m-lastname">Lopez</div>
+          <div class="m-role">Investigadora</div>
+        </a>
+        <a class="member" href="https://www.linkedin.com/in/karla-h-ruiz/" target="_blank" rel="noopener">
           <div class="m-photo"><img loading="lazy" src="img/karla-ruiz-chakakuna.jpg" alt="Karla H. Ruiz — Chakakuna"><div class="wash"></div><div class="halftone"></div></div>
-          <div class="m-name">Karla H. Ruiz</div>
-          <div class="m-role">Estratega Sr · Ciencia Política &amp; Innovación Digital</div>
-          <div class="m-focus">Tecnología y sociedad</div>
-        </div>
-        <div class="member">
+          <div class="m-firstname">Karla</div>
+          <div class="m-lastname">H. Ruiz</div>
+          <div class="m-role">Estratega creativa</div>
+        </a>
+        <a class="member" href="https://www.linkedin.com/in/katsarmientov/" target="_blank" rel="noopener">
           <div class="m-photo"><img loading="lazy" src="img/katherine-sarmiento-chakakuna.jpg" alt="Katherine Sarmiento — Chakakuna"><div class="wash"></div><div class="halftone"></div></div>
-          <div class="m-name">Katherine Sarmiento</div>
-          <div class="m-role">Investigadora Sr · Sociología &amp; Estudios de género</div>
-          <div class="m-focus">Tecnología y género</div>
-        </div>
+          <div class="m-firstname">Katherine</div>
+          <div class="m-lastname">Sarmiento</div>
+          <div class="m-role">Investigadora</div>
+        </a>
         <div class="member member-open">
           <div class="m-photo m-open">
             <div class="ph-inner">
               <span class="ph-plus" aria-hidden="true">+</span>
-              <span class="ph-label">plaza abierta</span>
+              <span class="ph-label">tu foto</span>
             </div>
           </div>
-          <div class="m-name">Tu nombre</div>
-          <div class="m-role">Practicante</div>
-          <div class="m-focus">Escríbenos a <a href="mailto:talento@chakakuna.com">talento@chakakuna.com</a></div>
-        </div>
-        <div class="member member-open">
-          <div class="m-photo m-open">
-            <div class="ph-inner">
-              <span class="ph-plus" aria-hidden="true">+</span>
-              <span class="ph-label">plaza abierta</span>
-            </div>
-          </div>
-          <div class="m-name">Tu nombre</div>
-          <div class="m-role">Investigadora asociada</div>
-          <div class="m-focus">Escríbenos a <a href="mailto:lucero@chakakuna.com">lucero@chakakuna.com</a></div>
+          <div class="m-firstname">Tu nombre</div>
+          <div class="m-lastname">&nbsp;</div>
+          <div class="m-role">Escribe a <a href="mailto:talento@chakakuna.com">talento@chakakuna.com</a></div>
         </div>
       </div>
     </div>
@@ -2019,7 +2063,7 @@
       <div class="contact-grid">
         <div>
           <h2 class="contact-title">
-            Conversemos.
+            Conversemos
           </h2>
           <p class="contact-lede">
             Escríbenos lo que tú o tu equipo tienen en mente. No tiene que ser muy claro. Sin formularios, sin presentaciones acartonadas.

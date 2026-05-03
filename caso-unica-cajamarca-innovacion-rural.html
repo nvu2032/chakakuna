@@ -117,9 +117,12 @@
 
   /* ── HERO ── */
   .case-hero {
+    background: var(--orange-light, #FFF5EE);
+    border-bottom: 1px solid var(--rule);
+  }
+  .case-hero-inner {
     padding: 60px var(--edge-pad) 0;
     max-width: 1440px; margin: 0 auto;
-    border-bottom: 1px solid var(--rule);
   }
   .case-meta-top {
     display: flex; align-items: center; gap: 20px;
@@ -327,69 +330,118 @@
 
   /* ── CONTACT ── */
   .contact {
-    position: relative; background: var(--ink);
-    padding: 100px 0; overflow: hidden;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 120px 0 80px;
+    position: relative;
+    overflow: hidden;
   }
   .contact::before {
-    content: ""; position: absolute; right: -8%; top: -20%;
+    content: "";
+    position: absolute;
+    right: -8%; top: -20%;
     width: 560px; height: 560px;
-    background: radial-gradient(circle at center, color-mix(in srgb, var(--pink) 40%, transparent), transparent 65%);
+    background: radial-gradient(circle at center,
+      color-mix(in srgb, var(--accent) 40%, transparent),
+      transparent 65%);
     pointer-events: none;
   }
   .contact-grid {
     position: relative;
-    display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: start;
-    max-width: 1440px; margin: 0 auto; padding: 0 var(--edge-pad);
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 64px;
   }
   .contact-title {
-    font-family: var(--serif); font-size: clamp(48px, 6vw, 88px);
-    font-weight: 500; letter-spacing: -0.03em; line-height: 0.95;
-    color: var(--paper); margin-bottom: 32px;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(40px, 5.2vw, 84px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    color: var(--paper);
+    text-wrap: balance;
+    max-width: 14ch;
   }
-  .contact-lede { color: rgba(242,237,228,0.65); font-size: 17px; line-height: 1.6; margin-bottom: 36px; }
-  .contact-lede em { color: var(--paper); font-style: normal; }
-  .contact-ctas { display: flex; flex-direction: column; gap: 12px; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em;
-    padding: 14px 22px; border: 1px solid rgba(242,237,228,0.3);
-    color: var(--paper); border-radius: 2px; transition: border-color .2s, background .2s; cursor: pointer;
+  .contact-title em { color: var(--accent); font-style: italic; font-weight: 400; }
+  .contact-lede {
+    margin-top: 28px;
+    font-family: var(--body);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.52;
+    color: color-mix(in srgb, var(--paper) 78%, transparent);
+    max-width: 46ch;
   }
-  .btn:hover { border-color: var(--paper); background: rgba(242,237,228,0.06); }
-  .btn-primary { background: var(--paper); color: var(--ink); border-color: var(--paper); }
-  .btn-primary:hover { background: var(--pink); border-color: var(--pink); color: var(--ink); }
-  .arr { font-style: normal; }
+  .contact-ctas {
+    margin-top: 36px;
+    display: flex; gap: 12px; flex-direction: column; align-items: flex-start;
+  }
+  .contact .btn {
+    border-color: color-mix(in srgb, var(--paper) 35%, transparent);
+    color: var(--paper);
+  }
+  .contact .btn:hover { border-color: var(--paper); }
+  .contact .btn-primary {
+    background: var(--accent); color: var(--ink); border-color: var(--accent);
+  }
+  .contact .btn-primary:hover { background: var(--paper); border-color: var(--paper); }
   .contact-card {
-    background: rgba(242,237,228,0.06); border: 1px solid rgba(242,237,228,0.14);
-    border-radius: 2px; padding: 32px; margin-top: 12px;
+    border: 1px solid color-mix(in srgb, var(--paper) 22%, transparent);
+    padding: 28px;
+    display: flex; flex-direction: column; gap: 22px;
+    background: color-mix(in srgb, var(--paper) 4%, transparent);
   }
   .contact-card h4 {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
-    text-transform: uppercase; color: rgba(242,237,228,0.45);
-    margin-bottom: 24px; font-weight: 400;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: color-mix(in srgb, var(--paper) 55%, transparent);
   }
-  .contact-row {
-    display: flex; justify-content: space-between; gap: 16px;
-    padding: 12px 0; border-bottom: 1px solid rgba(242,237,228,0.08); font-size: 14px;
+  .contact-row { display: flex; flex-direction: column; gap: 4px; }
+  .contact-row .k {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--paper) 50%, transparent);
   }
-  .contact-row:last-child { border-bottom: none; }
-  .k { color: rgba(242,237,228,0.45); }
-  .v { color: rgba(242,237,228,0.8); text-align: right; }
-  .v a { border-bottom: 1px solid rgba(242,237,228,0.2); padding-bottom: 1px; transition: border-color .2s; }
-  .v a:hover { border-color: var(--paper); }
+  .contact-row .v {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--paper);
+  }
+  .contact-row .v.em { color: var(--accent); }
+  .contact-row .v a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--paper) 35%, transparent);
+    transition: border-color .2s, color .2s;
+  }
+  .contact-row .v a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
   @media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; gap: 40px; } }
 
   /* ── FOOTER ── */
   .footer {
     background: var(--ink);
-    border-top: 1px solid rgba(242,237,228,0.1);
-    padding: 20px 0;
+    color: color-mix(in srgb, var(--paper) 60%, transparent);
+    padding: 36px 0 40px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border-top: 1px solid color-mix(in srgb, var(--paper) 15%, transparent);
   }
   .footer-row {
-    display: flex; justify-content: space-between; align-items: center;
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
-    color: rgba(242,237,228,0.4); flex-wrap: wrap; gap: 8px;
+    display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
   }
+  .footer b { color: var(--paper); font-weight: 500; }
   .footer-lang { cursor: pointer; }
   /* ── EQUIPO DEL PROYECTO ── */
   .caso-equipo {
@@ -402,16 +454,24 @@
   }
   .caso-equipo-grid {
     display: grid;
-    grid-template-columns: repeat(3, max-content);
-    gap: 24px;
-    align-items: flex-start;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 18px;
+    grid-auto-rows: auto;
+    row-gap: 0;
+  }
+  @media (max-width: 720px) {
+    .caso-equipo-grid { grid-template-columns: repeat(3, 1fr); }
   }
   .caso-member {
-    display: flex; align-items: center; gap: 14px;
+    grid-row: span 3;
+    display: grid;
+    grid-template-rows: subgrid;
+    margin-bottom: 32px;
   }
   .caso-member-photo {
-    width: 52px; height: 52px; border-radius: 50%;
-    overflow: hidden; background: var(--paper-3); flex-shrink: 0;
+    aspect-ratio: 3/4;
+    overflow: hidden; background: var(--paper-3);
+    align-self: stretch;
   }
   .caso-member-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.2); }
   .caso-member-photo-placeholder {
@@ -420,21 +480,18 @@
     font-family: var(--mono); font-size: 16px; color: var(--ink-ghost);
     background: var(--paper-3);
   }
-  .caso-member-info {}
   .caso-member-name {
-    font-family: 'Rubik', sans-serif; font-weight: 500; font-size: 14px;
-    color: var(--ink); line-height: 1.2;
+    font-family: 'Rubik', sans-serif; font-weight: 600; font-size: 13px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink); line-height: 1.2; padding-top: 10px;
   }
   .caso-member-role {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--ink-ghost); margin-top: 2px;
+    font-family: var(--body); font-size: 11px;
+    color: var(--ink-ghost); margin-top: 4px;
   }
   .caso-member.is-lead .caso-member-name { color: var(--accent); }
   .caso-member.is-lead .caso-member-photo { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .caso-member-divider {
-    width: 1px; height: 40px; background: var(--rule-strong);
-    margin: 0 8px; flex-shrink: 0;
-  }
+  .caso-member-divider { display: none; }
 </style>
 </head>
 <body data-mode="paper">
@@ -463,6 +520,7 @@
 
   <!-- ── CASE HERO ── -->
   <div class="case-hero">
+    <div class="case-hero-inner">
     <div class="case-meta-top">
       <span class="client">Newmont · ALAC</span>
       <span class="dot">·</span>
@@ -470,11 +528,12 @@
       <span class="dot">·</span>
       <span>2024</span>
     </div>
-    <h1 class="case-hero-title" data-i18n-es="CAJAMARCA ES ÚNICA" data-i18n-en="CAJAMARCA IS ÚNICA">CAJAMARCA ES ÚNICA</h1>
+    <h1 class="case-hero-title" data-i18n-es="EXPLORACIÓN DE IMPACTO EN CAJAMARCA" data-i18n-en="IMPACT EXPLORATION IN CAJAMARCA">EXPLORACIÓN DE IMPACTO EN CAJAMARCA</h1>
     <p class="case-hero-lede" data-i18n-es="Evidenciando el impacto humano de 15 años de inversión comunal en Cajamarca, más allá de los indicadores financieros." data-i18n-en="Evidencing the human impact of 15 years of community investment in Cajamarca, beyond financial indicators.">Evidenciando el impacto humano de 15 años de inversión comunal en Cajamarca, más allá de los indicadores financieros.</p>
     <div class="case-cover">
       <img src="img/unica-desarrollo-innovacion-rural-chakakuna.jpg" alt="Trabajo de campo en Cajamarca" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
       <div class="case-cover-placeholder" style="display:none;">img/unica-desarrollo-innovacion-rural-chakakuna.jpg</div>
+    </div>
     </div>
   </div>
 
@@ -582,79 +641,61 @@
       <div class="caso-equipo">
         <div class="caso-equipo-label" data-i18n-es="Equipo del proyecto" data-i18n-en="Project team">Equipo del proyecto</div>
 
-        <!-- Row 1: leads -->
-        <div class="caso-equipo-grid" style="margin-bottom: 20px;">
+        <div class="caso-equipo-grid">
           <div class="caso-member is-lead">
             <div class="caso-member-photo">
               <img src="img/nicolas-vargas-ugalde-chakakuna.jpg" alt="Nicolás Vargas" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>NV</div>'">
             </div>
-            <div class="caso-member-info">
-              <div class="caso-member-name">Nicolás Vargas</div>
-              <div class="caso-member-role" data-i18n-es="Líder de proyecto" data-i18n-en="Project lead">Líder de proyecto</div>
-            </div>
+            <div class="caso-member-name">Nicolás Vargas</div>
+            <div class="caso-member-role" data-i18n-es="Líder de proyecto" data-i18n-en="Project lead">Líder de proyecto</div>
           </div>
 
           <div class="caso-member is-lead">
             <div class="caso-member-photo">
               <img src="img/lucero-cuba-chakakuna.JPG" alt="Lucero Cuba" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>LC</div>'">
             </div>
-            <div class="caso-member-info">
-              <div class="caso-member-name">Lucero Cuba</div>
-              <div class="caso-member-role" data-i18n-es="Líder de proyecto" data-i18n-en="Project lead">Líder de proyecto</div>
-            </div>
+            <div class="caso-member-name">Lucero Cuba</div>
+            <div class="caso-member-role">&nbsp;</div>
           </div>
 
           <div class="caso-member is-lead">
             <div class="caso-member-photo">
               <div class="caso-member-photo-placeholder">NR</div>
             </div>
-            <div class="caso-member-info">
-              <div class="caso-member-name">Nía Rodríguez</div>
-              <div class="caso-member-role" data-i18n-es="Líder de proyecto" data-i18n-en="Project lead">Líder de proyecto</div>
-            </div>
+            <div class="caso-member-name">Nía Rodríguez</div>
+            <div class="caso-member-role">&nbsp;</div>
           </div>
-        </div>
 
-        <!-- Row 2: members -->
-        <div class="caso-equipo-grid" style="padding-top: 20px; border-top: 1px solid var(--rule);">
           <div class="caso-member">
             <div class="caso-member-photo">
               <img src="img/ella-gonez-chakakuna.png" alt="Ella Goñez" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>EG</div>'">
             </div>
-            <div class="caso-member-info">
-              <div class="caso-member-name">Ella Goñez</div>
-              <div class="caso-member-role" data-i18n-es="Investigadora Sr." data-i18n-en="Sr. Researcher">Investigadora Sr.</div>
-            </div>
+            <div class="caso-member-name">Ella Goñez</div>
+            <div class="caso-member-role">&nbsp;</div>
           </div>
 
           <div class="caso-member">
             <div class="caso-member-photo">
               <img src="img/brenda-alvarez-chakakuna.png" alt="Brenda Álvarez" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>BA</div>'">
             </div>
-            <div class="caso-member-info">
-              <div class="caso-member-name">Brenda Álvarez</div>
-              <div class="caso-member-role" data-i18n-es="Design Lead" data-i18n-en="Design Lead">Design Lead</div>
-            </div>
+            <div class="caso-member-name">Brenda Álvarez</div>
+            <div class="caso-member-role">&nbsp;</div>
           </div>
 
           <div class="caso-member">
             <div class="caso-member-photo">
               <img src="img/melanie-lopez-del-pozo-chakakuna.jpg" alt="Melanie López" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>ML</div>'">
             </div>
-            <div class="caso-member-info">
-              <div class="caso-member-name">Melanie López del Pozo</div>
-              <div class="caso-member-role" data-i18n-es="Research Lead" data-i18n-en="Research Lead">Research Lead</div>
-            </div>
+            <div class="caso-member-name">Melanie López del Pozo</div>
+            <div class="caso-member-role">&nbsp;</div>
           </div>
 
           <div class="caso-member">
             <div class="caso-member-photo">
               <img src="img/ana-paula-lopez-chakakuna.jpeg" alt="Ana Paula López" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>AP</div>'">
             </div>
-            <div class="caso-member-info">
-              <div class="caso-member-name">Ana Paula López</div>
-              <div class="caso-member-role" data-i18n-es="Investigadora Sr." data-i18n-en="Sr. Researcher">Investigadora Sr.</div>
-            </div>
+            <div class="caso-member-name">Ana Paula López</div>
+            <div class="caso-member-role">&nbsp;</div>
           </div>
         </div>
 
@@ -670,48 +711,130 @@
         <span class="mas-casos-title" data-i18n-es="Más casos" data-i18n-en="More cases">Más casos</span>
         <a href="index.html#casos" class="mas-casos-link" data-i18n-es="Ver todos →" data-i18n-en="View all →">Ver todos →</a>
       </div>
-      <div class="casos-grid">
-        <a href="#" class="caso-card">
-          <div class="caso-card-img">
-            <img src="img/retail-ferreterias-chakakuna.jpg" alt="La paradoja de la visibilidad" onerror="this.parentNode.style.background='var(--paper-3)'">
-          </div>
-          <div class="caso-card-info">
-            <div class="caso-card-tag" data-i18n-es="Comercio informal · 2024" data-i18n-en="Informal commerce · 2024">Comercio informal · 2024</div>
-            <div class="caso-card-title" data-i18n-es="La paradoja de la visibilidad" data-i18n-en="The visibility paradox">La paradoja de la visibilidad</div>
-            <div class="caso-card-arr">↗</div>
-          </div>
-        </a>
-        <a href="#" class="caso-card">
-          <div class="caso-card-img">
-            <img src="img/oxfam-redes-de-cuidado-chakakuna.jpg" alt="Redes que el Estado no ve" onerror="this.parentNode.style.background='var(--paper-3)'">
-          </div>
-          <div class="caso-card-info">
-            <div class="caso-card-tag" data-i18n-es="Cooperación · 2025" data-i18n-en="Cooperation · 2025">Cooperación · 2025</div>
-            <div class="caso-card-title" data-i18n-es="Redes que el Estado no ve" data-i18n-en="Networks the State does not see">Redes que el Estado no ve</div>
-            <div class="caso-card-arr">↗</div>
-          </div>
-        </a>
+      <div class="casos-grid" id="masCasosGrid">
+        <!-- populated by script -->
       </div>
+
+  <script>
+  (function () {
+    // ── Catalog of all cases ────────────────────────────────────────────────
+    // Each entry: { url, img, tag, title }
+    // title is fetched from the live HTML; tag and img are defined here as fallback.
+    const ALL_CASOS = [
+      {
+        url: 'caso-unica-cajamarca-innovacion-rural.html',
+        img: 'img/unica-desarrollo-innovacion-rural-chakakuna.jpg',
+        tag: 'Minería · Inversión social · 2024',
+        title: null // will be fetched
+      },
+      {
+        url: 'caso-oxfam-infraestructuras-cuidado.html',
+        img: 'img/oxfam-redes-de-cuidado-chakakuna.jpg',
+        tag: 'Cooperación · 2025',
+        title: null
+      },
+      {
+        url: 'caso-fintech-economia-secreta.html',
+        img: 'img/fintech-futuras-generaciones-chakakuna.jpg',
+        tag: 'Fintech · 2025',
+        title: null
+      },
+      {
+        url: 'caso-equimundo-nuevas-conversaciones.html',
+        img: 'img/equimundo-boyhood-initiative-chakakuna.jpg',
+        tag: 'Salud pública · 2024',
+        title: null
+      },
+      {
+        url: 'caso-makers150-negocios-invisibles.html',
+        img: 'img/retail-ferreterias-chakakuna.jpg',
+        tag: 'Comercio informal · 2024',
+        title: null
+      },
+    ];
+
+    const CURRENT = 'caso-unica-cajamarca-innovacion-rural.html';
+    const grid = document.getElementById('masCasosGrid');
+    if (!grid) return;
+
+    // Pick 2 random cases excluding the current one
+    const others = ALL_CASOS.filter(c => c.url !== CURRENT);
+    const shuffled = others.sort(() => Math.random() - 0.5).slice(0, 2);
+
+    // Render placeholders immediately
+    shuffled.forEach((caso, i) => {
+      const card = document.createElement('a');
+      card.href = caso.url;
+      card.className = 'caso-card';
+      card.innerHTML = `
+        <div class="caso-card-img">
+          <img src="${caso.img}" alt="" onerror="this.parentNode.style.background='var(--paper-3)'">
+        </div>
+        <div class="caso-card-info">
+          <div class="caso-card-tag">${caso.tag}</div>
+          <div class="caso-card-title" id="masCasoTitle${i}">—</div>
+          <div class="caso-card-arr">↗</div>
+        </div>`;
+      grid.appendChild(card);
+
+      // Fetch the real title from the case HTML
+      fetch(caso.url)
+        .then(r => { if (!r.ok) throw new Error(); return r.text(); })
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          // Try h1.case-hero-title first, fallback to <title>
+          const h1 = doc.querySelector('.case-hero-title');
+          const title = h1
+            ? h1.textContent.trim()
+            : doc.title.split('—')[0].trim();
+          const el = document.getElementById(`masCasoTitle${i}`);
+          if (el && title) el.textContent = title;
+        })
+        .catch(() => {
+          // Keep fallback tag as title if fetch fails
+          const el = document.getElementById(`masCasoTitle${i}`);
+          if (el) el.textContent = caso.tag;
+        });
+    });
+  })();
+  </script>
     </div>
   </section>
 
   <!-- ── CONTACT ── -->
   <section class="contact" id="contacto">
-    <div class="contact-grid">
-      <div>
-        <h2 class="contact-title" data-i18n-es="Conversemos." data-i18n-en="Let's talk.">Conversemos.</h2>
-        <p class="contact-lede" data-i18n-es="Escríbenos lo que tú o tu equipo tienen en mente. No tiene que ser muy claro. Te respondemos en menos de <em>24 horas.</em> Sin formularios, sin presentaciones acartonadas." data-i18n-en="Write us what you or your team have in mind. It doesn't need to be fully formed. We reply in under <em>24 hours.</em> No forms, no stiff pitch decks.">Escríbenos lo que tú o tu equipo tienen en mente. No tiene que ser muy claro. Te respondemos en menos de <em>24 horas.</em> Sin formularios, sin presentaciones acartonadas.</p>
-        <div class="contact-ctas">
-          <a href="mailto:hola@chakakuna.com" class="btn btn-primary" data-i18n-es="Escribir a hola@chakakuna.com <span class='arr'>→</span>" data-i18n-en="Write to hola@chakakuna.com <span class='arr'>→</span>">Escribir a hola@chakakuna.com <span class="arr">→</span></a>
-          <a href="#" class="btn" data-i18n-es="Descargar portafolio <span class='arr'>↓</span>" data-i18n-en="Download portfolio <span class='arr'>↓</span>">Descargar portafolio <span class="arr">↓</span></a>
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <h2 class="contact-title">Conversemos.</h2>
+          <p class="contact-lede">
+            Escríbenos lo que tú o tu equipo tienen en mente. No tiene que ser muy claro. Sin formularios, sin presentaciones acartonadas.
+          </p>
+          <div class="contact-ctas">
+            <a href="mailto:hola@chakakuna.com" class="btn" style="border-color:rgba(242,237,228,0.3); text-decoration: underline; text-decoration-color: var(--pink); text-underline-offset: 4px; text-decoration-thickness: 1.5px;">Escribir a hola@chakakuna.com <span class="arr">→</span></a>
+            <a href="https://wa.me/51910216934" target="_blank" rel="noopener" class="btn" style="border-color:rgba(242,237,228,0.3); text-decoration: underline; text-decoration-color: var(--mint); text-underline-offset: 4px; text-decoration-thickness: 1.5px;">Escribe al WhatsApp de participantes <span class="arr">→</span></a>
+          </div>
         </div>
-      </div>
-      <div class="contact-card">
-        <h4 data-i18n-es="Dónde nos encuentras" data-i18n-en="Where to find us">Dónde nos encuentras</h4>
-        <div class="contact-row"><span class="k" data-i18n-es="Estudio" data-i18n-en="Studio">Estudio</span><span class="v" data-i18n-es="Los Olivos · Lima · Perú" data-i18n-en="Los Olivos · Lima · Peru">Los Olivos · Lima · Perú</span></div>
-        <div class="contact-row"><span class="k" data-i18n-es="Correo electrónico" data-i18n-en="Email">Correo electrónico</span><span class="v">hola@chakakuna.com</span></div>
-        <div class="contact-row"><span class="k">LinkedIn</span><span class="v"><a href="https://www.linkedin.com/company/chakakuna/" target="_blank" rel="noopener">in/chakakuna</a></span></div>
-        <div class="contact-row"><span class="k">Instagram</span><span class="v"><a href="https://www.instagram.com/chakakuna_/" target="_blank" rel="noopener">ig/chakakuna_</a></span></div>
+        <div class="contact-card">
+          <h4>Dónde nos encuentras</h4>
+          <div class="contact-row">
+            <span class="k">Estudio</span>
+            <span class="v">Los Olivos · Lima · Perú</span>
+          </div>
+          <div class="contact-row">
+            <span class="k">Correo electrónico</span>
+            <span class="v em">hola@chakakuna.com</span>
+          </div>
+          <div class="contact-row">
+            <span class="k">LinkedIn</span>
+            <span class="v"><a href="https://www.linkedin.com/company/chakakuna/" target="_blank" rel="noopener">in/chakakuna</a></span>
+          </div>
+          <div class="contact-row">
+            <span class="k">Instagram</span>
+            <span class="v"><a href="https://www.instagram.com/chakakuna_/" target="_blank" rel="noopener">ig/chakakuna_</a></span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
