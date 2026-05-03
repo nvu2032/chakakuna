@@ -57,7 +57,7 @@
   body {
     font-family: var(--body);
     font-weight: 400;
-    font-size: 17px;
+    font-size: 18px;
     line-height: 1.55;
     color: var(--ink);
     background: var(--paper);
@@ -127,7 +127,7 @@
     display: inline-flex; align-items: center; gap: 10px;
     font-family: var(--serif);
     font-weight: 600;
-    font-size: 19px;
+    font-size: 18px;
     letter-spacing: -0.02em;
   }
   /* arched bridge mark (recurring motif) */
@@ -179,7 +179,7 @@
   .hero {
     position: relative;
     min-height: 100vh;
-    padding: 80px 0 0;
+    padding: 80px 0 80px;
     border-bottom: 1px solid rgba(242,237,228,0.14);
     display: flex;
     flex-direction: column;
@@ -215,7 +215,7 @@
     max-width: 480px;
     max-height: 480px;
     border-radius: 50%;
-    background: rgba(255,141,244,0.15);
+    background: rgba(255,141,244,0.28);
     filter: blur(70px);
     pointer-events: none;
     z-index: 9999;
@@ -232,6 +232,15 @@
     60%  { transform: scale(0.97) translateY(8px);   opacity: 0.75; }
     80%  { transform: scale(1.04) translateY(-5px);  opacity: 0.95; }
     100% { transform: scale(1)    translateY(0px);   opacity: 0.8; }
+  }
+  @keyframes hal-pulse {
+    0%   { transform: scale(1);   filter: blur(70px); opacity: 0.9; }
+    30%  { transform: scale(1.6); filter: blur(90px); opacity: 0.4; }
+    65%  { transform: scale(1.2); filter: blur(75px); opacity: 0.75; }
+    100% { transform: scale(1);   filter: blur(70px); opacity: 0.8; }
+  }
+  #hal-glow.hal-pulse {
+    animation: hal-pulse 1.4s cubic-bezier(0.22,1,0.36,1) forwards;
   }
   .hero > * { position: relative; z-index: 1; }
   /* All hero text → paper/white */
@@ -338,7 +347,7 @@
   .hero-arrow {
     font-family: var(--serif);
     font-style: italic;
-    font-size: 14px;
+    font-size: 13.5px;
     color: var(--ink-soft);
     white-space: nowrap;
   }
@@ -361,7 +370,7 @@
     animation: marq 120s linear infinite;
     font-family: var(--serif);
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
     letter-spacing: -0.015em;
     color: var(--ink);
     font-style: italic;
@@ -456,7 +465,7 @@
     display: flex; justify-content: space-between; align-items: baseline;
     padding: 14px 2px 0;
     font-family: var(--mono);
-    font-size: 10.5px;
+    font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--ink-soft);
@@ -531,7 +540,7 @@
   }
   .svc-body {
     font-family: var(--body);
-    font-size: 15.5px;
+    font-size: 16px;
     line-height: 1.62;
     color: rgba(61,61,91,0.6);
     max-width: 36ch;
@@ -548,7 +557,8 @@
 
   @media (max-width: 900px){
     .svc-grid { grid-template-columns: 1fr; }
-    .svc { border-right: none !important; padding: 36px 0 !important; min-height: unset; }
+    .svc { border-right: none !important; padding: 36px var(--edge-pad) !important; min-height: unset; }
+    .svc:nth-child(2n+1) { padding-left: var(--edge-pad) !important; }
   }
 
   /* ============================================================
@@ -580,7 +590,7 @@
   .client:hover .client-sector { color: var(--pink); }
   .client-num {
     font-family: var(--mono);
-    font-size: 10.5px;
+    font-size: 11px;
     letter-spacing: 0.18em;
     color: var(--ink-ghost);
   }
@@ -594,7 +604,7 @@
   }
   .client-sector {
     font-family: var(--mono);
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--ink-soft);
@@ -662,7 +672,7 @@
     content: "●";
     color: var(--accent);
     margin-right: 8px;
-    font-size: 9px;
+    font-size: 11px;
     vertical-align: middle;
   }
   .case-title {
@@ -678,7 +688,7 @@
   }
   .case-excerpt {
     font-family: var(--body);
-    font-size: 15.5px;
+    font-size: 16px;
     line-height: 1.62;
     color: var(--ink-soft);
     max-width: 42ch;
@@ -689,7 +699,7 @@
   }
   .chip {
     font-family: var(--mono);
-    font-size: 10.5px;
+    font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-soft);
@@ -736,7 +746,7 @@
   .case-img .tag {
     position: absolute; left: 14px; bottom: 12px;
     font-family: var(--mono);
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: color-mix(in srgb, var(--paper) 85%, transparent);
@@ -744,9 +754,10 @@
   }
 
   @media (max-width: 900px){
-    .case { grid-template-columns: 1fr; gap: 18px; padding: 32px 0; }
-    .case-img { order: -1; }
-    .case-text { padding-right: 0; }
+    .case { grid-template-columns: 1fr; gap: 18px; padding: 32px var(--edge-pad); display: flex; flex-direction: column; }
+    .case-img { order: 1; }
+    .case-text { order: 2; padding-right: 0; }
+    .case-meta { order: 3; }
   }
 
   /* ============================================================
@@ -858,7 +869,7 @@
   }
   .why-arg h4 {
     font-family: var(--serif);
-    font-size: 22px;
+    font-size: 18px;
     line-height: 1.15;
     font-weight: 500;
     letter-spacing: -0.02em;
@@ -866,7 +877,7 @@
   }
   .why-arg p {
     font-family: var(--body);
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.6;
     color: var(--ink-soft);
     max-width: 32ch;
@@ -881,7 +892,7 @@
   /* ============================================================
      TEAM
      ============================================================ */
-  .team { padding: 120px 0 120px; border-bottom: 1px solid var(--rule); }
+  .team { padding: 120px 0 120px; border-bottom: 1px solid var(--rule); background: var(--paper); }
   .team-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -926,21 +937,21 @@
   .m-name {
     font-family: 'Rubik', sans-serif;
     font-weight: 500;
-    font-size: 17px;
+    font-size: 18px;
     letter-spacing: -0.01em;
     color: var(--ink);
     line-height: 1.1;
   }
   .m-role {
     font-family: var(--mono);
-    font-size: 10.5px;
+    font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--ink-soft);
   }
   .m-focus {
     font-family: var(--body);
-    font-size: 12.5px;
+    font-size: 11px;
     line-height: 1.35;
     color: var(--ink-ghost);
     font-style: italic;
@@ -985,7 +996,7 @@
   }
   .m-placeholder .ph-label {
     font-family: var(--mono);
-    font-size: 9.5px;
+    font-size: 11px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--ink-soft);
@@ -1015,7 +1026,7 @@
   }
   .m-open .ph-label {
     font-family: var(--mono);
-    font-size: 9.5px;
+    font-size: 11px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--ink-soft);
@@ -1171,7 +1182,7 @@
   .contact-row { display: flex; flex-direction: column; gap: 4px; }
   .contact-row .k {
     font-family: var(--mono);
-    font-size: 10.5px;
+    font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: color-mix(in srgb, var(--paper) 50%, transparent);
@@ -1286,16 +1297,16 @@
     }
     .clients-grid { grid-template-columns: 1fr; }
     .clients-grid .client { border-right: none !important; }
-    .case { padding: 28px 0; }
+    .case { padding: 28px var(--edge-pad); }
     .case-title { font-size: clamp(22px, 6vw, 32px); }
     .why-massive { font-size: 18px; max-width: none; }
     .team-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
     .contact-grid { grid-template-columns: 1fr; gap: 32px; }
     .contact-row .v { font-size: clamp(22px, 7vw, 36px); }
     .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
-    .btn { font-size: 13px; padding: 10px 16px; }
+    .btn { font-size: 13.5px; padding: 10px 16px; }
     .river-track { font-size: 16px; }
-    .nav-cta { padding: 8px 12px; font-size: 12px; }
+    .nav-cta { padding: 8px 12px; font-size: 11px; }
   }
 
 </style>
@@ -1307,7 +1318,7 @@
        TOP BAR
        ============================================================ -->
   <header class="topbar">
-    <a class="brand" href="#top" aria-label="Chakakuna" style="font-family:'Rubik',sans-serif;font-weight:700;letter-spacing:0.12em;font-size:15px;">
+    <a class="brand" href="#top" aria-label="Chakakuna" style="font-family:'Rubik',sans-serif;font-weight:700;letter-spacing:0.12em;font-size:16px;">
       CHAKAKUNA
     </a>
     <nav class="nav">
@@ -2332,15 +2343,25 @@
 
     // Glow colors per word index
     const GLOW_COLORS = [
-      'rgba(255,141,244,0.15)',  // 0 — pink
-      'rgba(77,223,184,0.13)',   // 1 — mint
-      'rgba(253,169,70,0.13)',   // 2 — orange
+      'rgba(255,141,244,0.28)',  // 0 — pink
+      'rgba(77,223,184,0.25)',   // 1 — mint
+      'rgba(253,169,70,0.25)',   // 2 — orange
     ];
 
     function setHeroBg(i) {
       const glow = document.getElementById('hal-glow');
       if (!glow) return;
       glow.style.background = GLOW_COLORS[i % GLOW_COLORS.length];
+      glow.classList.remove('hal-pulse');
+      void glow.offsetWidth;
+      glow.classList.add('hal-pulse');
+      // Resume breathing after pulse completes
+      glow.addEventListener('animationend', function onEnd(e) {
+        if (e.animationName === 'hal-pulse') {
+          glow.classList.remove('hal-pulse');
+          glow.removeEventListener('animationend', onEnd);
+        }
+      });
     }
 
     // Fade out halo as user scrolls past hero
