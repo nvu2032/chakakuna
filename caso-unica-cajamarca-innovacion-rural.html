@@ -469,11 +469,38 @@
     margin-bottom: 32px;
   }
   .caso-member-photo {
+    position: relative;
     aspect-ratio: 3/4;
-    overflow: hidden; background: var(--paper-3);
+    overflow: hidden;
+    background: var(--ink);
     align-self: stretch;
   }
-  .caso-member-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.2); }
+  .caso-member-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.15);
+    transition: filter .4s;
+    mix-blend-mode: luminosity;
+  }
+  .caso-member-photo .wash {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg,
+      color-mix(in srgb, var(--accent) 75%, transparent),
+      color-mix(in srgb, var(--ink) 75%, transparent));
+    mix-blend-mode: multiply;
+    transition: opacity .3s;
+  }
+  .caso-member-photo .halftone {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.2) 1px, transparent 1.2px);
+    background-size: 3.5px 3.5px;
+    mix-blend-mode: screen;
+    opacity: 0.3;
+    transition: opacity .3s;
+  }
+  .caso-member:hover .wash { opacity: 0; }
+  .caso-member:hover .halftone { opacity: 0; }
+  .caso-member:hover .caso-member-photo img { filter: grayscale(0) contrast(1); mix-blend-mode: normal; }
   .caso-member-photo-placeholder {
     width: 100%; height: 100%;
     display: flex; align-items: center; justify-content: center;
@@ -486,8 +513,8 @@
     color: var(--ink); line-height: 1.2; padding-top: 10px;
   }
   .caso-member-role {
-    font-family: var(--body); font-size: 11px;
-    color: var(--ink-ghost); margin-top: 4px;
+    font-family: var(--body); font-size: 12px;
+    margin-top: 4px;
   }
   .caso-member.is-lead .caso-member-name { color: var(--accent); }
   .caso-member.is-lead .caso-member-photo { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -555,7 +582,7 @@
       <div class="sidebar-value">2024</div>
 
       <div class="sidebar-label" data-i18n-es="Duración" data-i18n-en="Duration">Duración</div>
-      <div class="sidebar-value" data-i18n-es="12 semanas" data-i18n-en="12 weeks">12 semanas</div>
+      <div class="sidebar-value" >20 semanas</div>
 
       <div class="sidebar-label" data-i18n-es="Enfoque" data-i18n-en="Approach">Enfoque</div>
       <div style="display:flex; flex-wrap: wrap; margin-top: 4px;">
@@ -588,15 +615,15 @@
 
       <!-- Lo que hicimos -->
       <div class="proceso">
-        <h2 class="proceso-title" data-i18n-es="Lo que hicimos" data-i18n-en="What we did">Lo que hicimos</h2>
+        <div class="section-label">El proceso</div>
 
         <div class="proceso-step">
           <div class="step-num">01</div>
           <div class="step-body">
-            <h3 class="step-title" data-i18n-es="Inmersión en campo y Laboratorio Vivo" data-i18n-en="Field immersion and Living Lab">Inmersión en campo y Laboratorio Vivo</h3>
-            <p class="step-text" data-i18n-es="Rechazamos trabajar en remoto. Abrimos una casa en Cajamarca y la convertimos en el primer paso en un Laboratorio Vivo. Durante 15 días recibimos a líderes comunales, gerentes de proyecto y ejecutivos en un mismo espacio, sintetizando en tiempo real artefactos de campo, testimonios directos y mapeo territorial." data-i18n-en="We refused to work remotely. We opened a house in Cajamarca and turned it into the first step in a Living Lab. For 15 days we hosted community leaders, project managers, and executives in the same space, synthesizing in real time field artifacts, direct testimonies, and territorial mapping.">Rechazamos trabajar en remoto. Abrimos una casa en Cajamarca y la convertimos en el primer paso en un Laboratorio Vivo. Durante 15 días recibimos a líderes comunales, gerentes de proyecto y ejecutivos en un mismo espacio, sintetizando en tiempo real artefactos de campo, testimonios directos y mapeo territorial.</p>
+            <h3 class="step-title">Inmersión en campo</h3>
+            <p class="step-text">Nos mudamos a Cajamarca. Alquilamos una casa y desde ahí salíamos cada día a visitar comunidades, a estar donde las cosas ocurren. De ese trabajo de campo levantamos 5 áreas de impacto que el modelo original no había visto: cómo las propias comunidades se habían apropiado del programa y lo habían transformado. Con esa evidencia presentamos ante los stakeholders, construimos un dossier para compartir los hallazgos, y co-diseñamos con el Instituto de Estudios Peruanos una evaluación de impacto que mida mejor lo que el programa realmente produce.</p>
             <div class="step-img">
-              <img src="img/caso-unica-pop-up-lab-chakakuna.jpg" alt="Laboratorio vivo en Cajamarca" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <img src="img/caso-unica-pop-up-lab-chakakuna.jpg" alt="Inmersion en campo en Cajamarca" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
               <div class="step-img-placeholder" style="display:none;">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                 img/caso-unica-pop-up-lab-chakakuna.jpg
@@ -608,10 +635,10 @@
         <div class="proceso-step">
           <div class="step-num">02</div>
           <div class="step-body">
-            <h3 class="step-title" data-i18n-es="La escuela de Liderazgos positivos" data-i18n-en="The School of Positive Leadership">La escuela de Liderazgos positivos</h3>
-            <p class="step-text" data-i18n-es="Identificamos que las socias más sólidas no solo manejaban herramientas financieras: eran el tejido de confianza de su comunidad. Diseñamos una intervención para visibilizar y fortalecer ese liderazgo, dándoles un lenguaje y una plataforma para formar líderes cívicas capaces de navegar crisis de forma independiente." data-i18n-en="We identified that the strongest members didn't just manage financial tools: they were the trust fabric of their community. We designed an intervention to make that leadership visible and strengthen it, giving them a language and a platform to train civic leaders capable of navigating crises independently.">Identificamos que las socias más sólidas no solo manejaban herramientas financieras: eran el tejido de confianza de su comunidad. Diseñamos una intervención para visibilizar y fortalecer ese liderazgo, dándoles un lenguaje y una plataforma para formar líderes cívicas capaces de navegar crisis de forma independiente.</p>
+            <h3 class="step-title">Sprint de innovación para el desarrollo</h3>
+            <p class="step-text">Trabajamos en abierto. Convertimos el primer piso de la casa en un pop-up lab al que llegaron miembros de las UNICA, equipo de Newmont y académicos que, al ver todo desplegado, empezaron a imaginar los siguientes años del programa. Desde ese mismo espacio diseñamos una semana de transferencia de capacidades para el equipo de Newmont ALAC. Capacitamos a 12 personas durante 4 días en metodologías de investigación aplicadas al contexto del programa.</p>
             <div class="step-img">
-              <img src="img/caso-unica-taller-de-liderazgo-innovacion-chakakuna.jpg" alt="Escuela de liderazgos" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <img src="img/caso-unica-taller-de-liderazgo-innovacion-chakakuna.jpg" alt="Sprint de innovacion en Cajamarca" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
               <div class="step-img-placeholder" style="display:none;">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                 img/caso-unica-taller-de-liderazgo-innovacion-chakakuna.jpg
@@ -623,10 +650,10 @@
         <div class="proceso-step">
           <div class="step-num">03</div>
           <div class="step-body">
-            <h3 class="step-title" data-i18n-es="Museo de Impacto: de la donación a la transformación" data-i18n-en="Impact Museum: from donation to transformation">Museo de Impacto: de la donación a la transformación</h3>
-            <p class="step-text" data-i18n-es="Materializamos 15 años de trabajo en un Museo de Impacto: una narrativa estratégica y una hoja de ruta física que le permitió a Newmont pasar de una mentalidad de donación a una de transformación social. El impacto fue validado con más de 40 líderes comunitarios." data-i18n-en="We materialized 15 years of work into an Impact Museum: a strategic narrative and physical roadmap that allowed Newmont to shift from a donation mindset to one of social transformation. The impact was validated with more than 40 community leaders.">Materializamos 15 años de trabajo en un Museo de Impacto: una narrativa estratégica y una hoja de ruta física que le permitió a Newmont pasar de una mentalidad de donación a una de transformación social. El impacto fue validado con más de 40 líderes comunitarios.</p>
+            <h3 class="step-title">Diseño de Cajamarca es UNICA</h3>
+            <p class="step-text">Con la investigación en mano, diseñamos la segunda edición del encuentro de las UNICA. La edición anterior había reunido a 3000 personas para darles información. Esta vez usamos los hallazgos para diseñar una experiencia de 2 días: clínicas de resolución de dudas, carpas temáticas en agro, ganadería y negocio, una hackathon para imaginar el futuro juntos. Un evento para que las UNICA compartan lo que aprendieron y celebren lo que construyeron.</p>
             <div class="step-img">
-              <img src="img/caso-unica-cajamarca-diseno-de-experiencia-chakakuna.jpeg" alt="Museo de Impacto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <img src="img/caso-unica-cajamarca-diseno-de-experiencia-chakakuna.jpeg" alt="Evento Cajamarca es UNICA" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
               <div class="step-img-placeholder" style="display:none;">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                 img/caso-unica-cajamarca-diseno-de-experiencia-chakakuna.jpeg
@@ -639,20 +666,25 @@
 
       <!-- Equipo del proyecto -->
       <div class="caso-equipo">
-        <div class="caso-equipo-label" data-i18n-es="Equipo del proyecto" data-i18n-en="Project team">Equipo del proyecto</div>
+        <div class="caso-equipo-label" >Equipo</div>
 
         <div class="caso-equipo-grid">
+
           <div class="caso-member is-lead">
             <div class="caso-member-photo">
-              <img src="img/nicolas-vargas-ugalde-chakakuna.jpg" alt="Nicolás Vargas" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>NV</div>'">
+              <img src="img/nicolas-vargas-ugalde-chakakuna.jpg" alt="Nicolás Vargas" onerror="this.parentNode.innerHTML='<div class=&quot;caso-member-photo-placeholder&quot;>NV</div>'">
+              <div class="wash"></div>
+              <div class="halftone"></div>
             </div>
             <div class="caso-member-name">Nicolás Vargas</div>
-            <div class="caso-member-role" data-i18n-es="Líder de proyecto" data-i18n-en="Project lead">Líder de proyecto</div>
+            <div class="caso-member-role">Líder de proyecto</div>
           </div>
 
           <div class="caso-member is-lead">
             <div class="caso-member-photo">
-              <img src="img/lucero-cuba-chakakuna.JPG" alt="Lucero Cuba" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>LC</div>'">
+              <img src="img/lucero-cuba-chakakuna.JPG" alt="Lucero Cuba" onerror="this.parentNode.innerHTML='<div class=&quot;caso-member-photo-placeholder&quot;>LC</div>'">
+              <div class="wash"></div>
+              <div class="halftone"></div>
             </div>
             <div class="caso-member-name">Lucero Cuba</div>
             <div class="caso-member-role">&nbsp;</div>
@@ -668,7 +700,9 @@
 
           <div class="caso-member">
             <div class="caso-member-photo">
-              <img src="img/ella-gonez-chakakuna.png" alt="Ella Goñez" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>EG</div>'">
+              <img src="img/ella-gonez-chakakuna.png" alt="Ella Goñez" onerror="this.parentNode.innerHTML='<div class=&quot;caso-member-photo-placeholder&quot;>EG</div>'">
+              <div class="wash"></div>
+              <div class="halftone"></div>
             </div>
             <div class="caso-member-name">Ella Goñez</div>
             <div class="caso-member-role">&nbsp;</div>
@@ -676,7 +710,9 @@
 
           <div class="caso-member">
             <div class="caso-member-photo">
-              <img src="img/brenda-alvarez-chakakuna.png" alt="Brenda Álvarez" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>BA</div>'">
+              <img src="img/brenda-alvarez-chakakuna.png" alt="Brenda Álvarez" onerror="this.parentNode.innerHTML='<div class=&quot;caso-member-photo-placeholder&quot;>BA</div>'">
+              <div class="wash"></div>
+              <div class="halftone"></div>
             </div>
             <div class="caso-member-name">Brenda Álvarez</div>
             <div class="caso-member-role">&nbsp;</div>
@@ -684,7 +720,9 @@
 
           <div class="caso-member">
             <div class="caso-member-photo">
-              <img src="img/melanie-lopez-del-pozo-chakakuna.jpg" alt="Melanie López" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>ML</div>'">
+              <img src="img/melanie-lopez-del-pozo-chakakuna.jpg" alt="Melanie López" onerror="this.parentNode.innerHTML='<div class=&quot;caso-member-photo-placeholder&quot;>ML</div>'">
+              <div class="wash"></div>
+              <div class="halftone"></div>
             </div>
             <div class="caso-member-name">Melanie López del Pozo</div>
             <div class="caso-member-role">&nbsp;</div>
@@ -692,12 +730,15 @@
 
           <div class="caso-member">
             <div class="caso-member-photo">
-              <img src="img/ana-paula-lopez-chakakuna.jpeg" alt="Ana Paula López" onerror="this.parentNode.innerHTML='<div class=caso-member-photo-placeholder>AP</div>'">
+              <img src="img/ana-paula-lopez-chakakuna.jpeg" alt="Ana Paula López" onerror="this.parentNode.innerHTML='<div class=&quot;caso-member-photo-placeholder&quot;>AP</div>'">
+              <div class="wash"></div>
+              <div class="halftone"></div>
             </div>
             <div class="caso-member-name">Ana Paula López</div>
             <div class="caso-member-role">&nbsp;</div>
           </div>
-        </div>
+
+        </div>        </div>
 
       </div>
 
@@ -772,7 +813,7 @@
         </div>
         <div class="caso-card-info">
           <div class="caso-card-tag">${caso.tag}</div>
-          <div class="caso-card-title" id="masCasoTitle${i}">—</div>
+          <div class="caso-card-title" id="masCasoTitle${i}">...</div>
           <div class="caso-card-arr">↗</div>
         </div>`;
       grid.appendChild(card);
@@ -787,7 +828,7 @@
           const h1 = doc.querySelector('.case-hero-title');
           const title = h1
             ? h1.textContent.trim()
-            : doc.title.split('—')[0].trim();
+            : doc.title.split(' - ')[0].trim();
           const el = document.getElementById(`masCasoTitle${i}`);
           if (el && title) el.textContent = title;
         })
