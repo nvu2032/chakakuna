@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Exploración de impacto en UNICA Cajamarca — Chakakuna</title>
+<title>El Índice de Cohesión Social — Chakakuna</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -259,10 +259,35 @@
   }
   .step-text { font-size: 16px; line-height: 1.7; color: var(--ink-soft); max-width: 60ch; }
   .step-img {
-    margin-top: 28px; overflow: hidden; background: var(--paper-3);
+    position: relative;
+    margin-top: 28px; overflow: hidden; background: var(--ink);
     aspect-ratio: 16/7; display: flex; align-items: center; justify-content: center;
   }
-  .step-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.15); }
+  .step-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(1) contrast(1.15);
+    transition: filter .4s;
+    mix-blend-mode: luminosity;
+  }
+  .step-img .wash {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg,
+      color-mix(in srgb, var(--accent) 75%, transparent),
+      color-mix(in srgb, var(--ink) 75%, transparent));
+    mix-blend-mode: multiply;
+    transition: opacity .3s;
+  }
+  .step-img .halftone {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.2) 1px, transparent 1.2px);
+    background-size: 3.5px 3.5px;
+    mix-blend-mode: screen;
+    opacity: 0.3;
+    transition: opacity .3s;
+  }
+  .step-img:hover .wash { opacity: 0; }
+  .step-img:hover .halftone { opacity: 0; }
+  .step-img:hover img { filter: grayscale(0) contrast(1); mix-blend-mode: normal; }
   .step-img-placeholder {
     width: 100%; height: 100%;
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
@@ -624,6 +649,8 @@
             <p class="step-text">Nos mudamos a Cajamarca. Instalamos nuestra casa Chakakuna en Baños del Inca y desde ahí salíamos cada día a visitar comunidades, a estar donde las cosas ocurren. De ese trabajo de campo levantamos 5 áreas de impacto que el modelo original no había visto: cómo las propias comunidades se habían apropiado del programa y lo habían transformado. Con esa evidencia presentamos ante los stakeholders, construimos un dossier para compartir los hallazgos, y co-diseñamos con el Instituto de Estudios Peruanos una evaluación de impacto que mida mejor lo que el programa realmente produce.</p>
             <div class="step-img">
               <img src="img/caso-unica-pop-up-lab-chakakuna.jpg" alt="Inmersion en campo en Cajamarca" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class="wash"></div>
+              <div class="halftone"></div>
               <div class="step-img-placeholder" style="display:none;">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                 img/caso-unica-pop-up-lab-chakakuna.jpg
@@ -639,6 +666,8 @@
             <p class="step-text">Trabajamos en abierto. Convertimos el primer piso de la casa en un pop-up lab al que llegaron miembros de las UNICA, equipo de Newmont y académicos que, al ver todo desplegado, empezaron a imaginar los siguientes años del programa. Desde ese mismo espacio diseñamos una semana de transferencia de capacidades para el equipo de Newmont ALAC. Capacitamos a 12 personas durante 4 días en metodologías de investigación aplicadas al contexto del programa.</p>
             <div class="step-img">
               <img src="img/caso-unica-taller-de-liderazgo-innovacion-chakakuna.JPG" alt="Sprint de innovacion en Cajamarca" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class="wash"></div>
+              <div class="halftone"></div>
               <div class="step-img-placeholder" style="display:none;">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                 img/caso-unica-taller-de-liderazgo-innovacion-chakakuna.jpg
@@ -654,6 +683,8 @@
             <p class="step-text">Con la investigación en mano, diseñamos la segunda edición del encuentro de las UNICA. La edición anterior había reunido a 3000 personas para darles información. Esta vez usamos los hallazgos para diseñar una experiencia de 2 días: clínicas de resolución de dudas, carpas temáticas en agro, ganadería y negocio, una hackathon para imaginar el futuro juntos. Un evento para que las UNICA compartan lo que aprendieron y celebren lo que construyeron.</p>
             <div class="step-img">
               <img src="img/caso-unica-cajamarca-diseno-de-experiencia-chakakuna.jpeg" alt="Evento Cajamarca es UNICA" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class="wash"></div>
+              <div class="halftone"></div>
               <div class="step-img-placeholder" style="display:none;">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                 img/caso-unica-cajamarca-diseno-de-experiencia-chakakuna.jpeg
