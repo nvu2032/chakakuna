@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Comparte conmigo — Chakakuna</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --ink:        #3D3D5B;
+    --ink-soft:   #3D3D5B;
+    --ink-ghost:  rgba(61,61,91,0.55);
+    --paper:      #FFFFFF;
+    --paper-2:    #F5F5F7;
+    --paper-3:    #EBEBED;
+    --rule:       rgba(61,61,91,0.12);
+    --rule-strong:rgba(61,61,91,0.32);
+    --pink:       #FF8DF4;
+    --orange:     #FDA946;
+    --mint:       #4DDFB8;
+    --lavender:   #B59EFF;
+    --accent:     var(--orange); /* case accent color */
+    --serif:      "Playfair Display", Georgia, serif;
+    --body:       "Manrope", system-ui, sans-serif;
+    --mono:       "Manrope", ui-monospace, monospace;
+    --edge-pad:   44px;
+  }
+  @media (max-width: 720px) { :root { --edge-pad: 20px; } }
+
+  body {
+    font-family: var(--body);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0; pointer-events: none; z-index: 200;
+    background-image: radial-gradient(rgba(61,61,91,0.06) 1px, transparent 1px);
+    background-size: 3px 3px;
+    mix-blend-mode: multiply;
+    opacity: 0.35;
+  }
+  a { color: inherit; text-decoration: none; }
+  h1,h2,h3,h4 { margin: 0; font-weight: 500; }
+  p { margin: 0; }
+  img { display: block; max-width: 100%; }
+
+  .wrap {
+    width: 100%; max-width: 1440px;
+    margin: 0 auto; padding: 0 var(--edge-pad);
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 24px;
+    padding: 18px var(--edge-pad);
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .brand {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700; letter-spacing: 0.12em; font-size: 15px;
+    color: var(--ink);
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: center; gap: 30px;
+    font-family: var(--body); font-size: 13.5px; font-weight: 500;
+  }
+  .nav a { opacity: 0.74; transition: opacity .15s; }
+  .nav a:hover { opacity: 1; color: var(--accent); }
+  .nav-right { display: flex; align-items: center; justify-content: flex-end; gap: 18px; }
+  .nav-lang {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+    color: var(--ink-soft); cursor: pointer; user-select: none;
+  }
+  .nav-lang [data-lang-btn].is-active { color: var(--ink); font-weight: 600; }
+  .footer-lang { color: color-mix(in srgb, var(--paper) 60%, transparent); }
+  .footer-lang [data-lang-btn].is-active { color: var(--paper); }
+  .nav-cta {
+    padding: 9px 16px; border: 1px solid var(--ink); border-radius: 999px;
+    font-family: var(--body); font-size: 13.5px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 8px; transition: all .15s;
+  }
+  .nav-cta:hover { background: var(--ink); color: var(--paper); }
+  @media (max-width: 900px) {
+    .topbar { grid-template-columns: 1fr auto; }
+    .nav, .nav-lang { display: none; }
+  }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb {
+    padding: 20px var(--edge-pad);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+    color: var(--ink-ghost); text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+    max-width: 1440px; margin: 0 auto;
+  }
+  .breadcrumb a { transition: color .15s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb-sep { opacity: 0.35; }
+
+  /* ── HERO ── */
+  .case-hero {
+    background: color-mix(in srgb, var(--accent) 12%, var(--paper));
+    border-bottom: 1px solid var(--rule);
+  }
+  .case-hero-inner {
+    padding: 60px var(--edge-pad) 0;
+    max-width: 1440px; margin: 0 auto;
+  }
+  .case-meta-top {
+    display: flex; align-items: center; gap: 20px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-ghost);
+    margin-bottom: 28px;
+  }
+  .case-meta-top .client { color: var(--accent); font-weight: 600; }
+  .case-meta-top .dot { opacity: 0.3; }
+  .case-hero-title {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(44px, 6.5vw, 100px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    max-width: 18ch;
+    margin-bottom: 36px;
+  }
+  .case-hero-lede {
+    font-size: 19px; line-height: 1.6;
+    color: var(--ink-ghost); max-width: 60ch;
+    margin-bottom: 60px;
+  }
+  .case-cover {
+    width: 100%; aspect-ratio: 21/8;
+    overflow: hidden; background: var(--paper-3);
+    position: relative;
+  }
+  .case-cover img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.2) contrast(1.1);
+  }
+  .case-cover-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--ink) 0%, color-mix(in srgb, var(--accent) 40%, var(--ink)) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(242,237,228,0.4);
+  }
+
+  /* ── BODY LAYOUT ── */
+  .case-body {
+    max-width: 1440px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .case-sidebar {
+    padding: 72px 48px 72px var(--edge-pad);
+    border-right: 1px solid var(--rule);
+    position: sticky; top: 56px;
+    align-self: start;
+  }
+  .sidebar-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ink-ghost);
+    margin-bottom: 8px;
+  }
+  .sidebar-value {
+    font-size: 15px; color: var(--ink); margin-bottom: 28px; line-height: 1.4;
+  }
+  .sidebar-value.accent { color: var(--accent); font-weight: 500; }
+  .sidebar-tag {
+    display: inline-block;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 4px 10px;
+    border: 1px solid var(--rule-strong); border-radius: 2px;
+    color: var(--ink-ghost); margin: 0 4px 6px 0;
+  }
+  .case-content {
+    padding: 72px 64px 100px;
+  }
+  @media (max-width: 900px) {
+    .case-body { grid-template-columns: 1fr; }
+    .case-sidebar { position: static; border-right: none; border-bottom: 1px solid var(--rule); padding: 40px var(--edge-pad); }
+    .case-content { padding: 48px var(--edge-pad) 80px; }
+  }
+
+  /* ── EL RETO ── */
+  .reto {
+    margin-bottom: 72px;
+    padding-bottom: 72px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .reto-title {
+    font-family: 'Rubik', sans-serif; font-size: clamp(24px, 2.5vw, 36px);
+    font-weight: 700; letter-spacing: -0.01em; line-height: 1.15;
+    color: var(--ink); margin-bottom: 24px; max-width: 20ch;
+  }
+  .reto-body { font-size: 16px; line-height: 1.7; color: var(--ink-soft); max-width: 60ch; }
+  .reto-body p + p { margin-top: 16px; }
+
+  /* ── RESULTADO HIGHLIGHT ── */
+  .resultado {
+    background: var(--paper-2);
+    border-left: 3px solid var(--accent);
+    padding: 32px 36px;
+    margin-bottom: 72px;
+    font-size: 16px; line-height: 1.7; color: var(--ink-soft);
+    max-width: 65ch;
+  }
+
+  /* ── LO QUE HICIMOS ── */
+  .proceso { margin-bottom: 72px; }
+  .proceso-title {
+    font-family: 'Rubik', sans-serif; font-size: clamp(28px, 3vw, 44px);
+    font-weight: 700; letter-spacing: -0.01em;
+    color: var(--ink); margin-bottom: 56px;
+  }
+  .proceso-step {
+    display: grid; grid-template-columns: 48px 1fr;
+    gap: 28px; margin-bottom: 56px;
+    padding-bottom: 56px; border-bottom: 1px solid var(--rule);
+  }
+  .proceso-step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .step-num {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent); padding-top: 6px;
+  }
+  .step-body {}
+  .step-title {
+    font-family: 'Rubik', sans-serif; font-size: clamp(20px, 2vw, 28px);
+    font-weight: 700; letter-spacing: -0.01em; line-height: 1.2;
+    color: var(--ink); margin-bottom: 14px;
+  }
+  .step-text { font-size: 16px; line-height: 1.7; color: var(--ink-soft); max-width: 60ch; }
+  .step-img {
+    position: relative;
+    margin-top: 28px; overflow: hidden; background: var(--ink);
+    aspect-ratio: 16/7; display: flex; align-items: center; justify-content: center;
+  }
+  .step-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(1) contrast(1.15);
+    transition: filter .4s;
+    mix-blend-mode: luminosity;
+  }
+  .step-img .wash {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg,
+      color-mix(in srgb, var(--accent) 75%, transparent),
+      color-mix(in srgb, var(--ink) 75%, transparent));
+    mix-blend-mode: multiply;
+    transition: opacity .3s;
+  }
+  .step-img .halftone {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.2) 1px, transparent 1.2px);
+    background-size: 3.5px 3.5px;
+    mix-blend-mode: screen;
+    opacity: 0.3;
+    transition: opacity .3s;
+  }
+  .step-img:hover .wash { opacity: 0; }
+  .step-img:hover .halftone { opacity: 0; }
+  .step-img:hover img { filter: grayscale(0) contrast(1); mix-blend-mode: normal; }
+  .step-img.focus-lower img {
+    object-position: center 64%;
+    transform: scale(1.35);
+    transform-origin: center 64%;
+  }
+  .step-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-ghost);
+    border: 1px dashed var(--rule-strong);
+  }
+  .step-img-placeholder svg { opacity: 0.25; }
+  @media (max-width: 720px) {
+    .proceso-step { grid-template-columns: 1fr; gap: 12px; }
+  }
+
+  /* ── MÁS CASOS ── */
+  .mas-casos {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .mas-casos-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 40px;
+  }
+  .mas-casos-title {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-ghost);
+  }
+  .mas-casos-link {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+    transition: opacity .15s;
+  }
+  .mas-casos-link:hover { opacity: 0.7; }
+  .casos-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  }
+  .caso-card {
+    display: block; background: var(--paper-2);
+    overflow: hidden; position: relative;
+    transition: background .25s;
+    --card-accent: var(--mint);
+  }
+  .caso-card:nth-child(2) { --card-accent: var(--orange); }
+  .caso-card:hover { background: var(--card-accent); }
+  .caso-card-img {
+    aspect-ratio: 16/9; overflow: hidden; background: var(--paper-3);
+  }
+  .caso-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+  .caso-card:hover .caso-card-img img { transform: scale(1.04); }
+  .caso-card-info { padding: 24px 28px 32px; }
+  .caso-card-tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-ghost); margin-bottom: 10px;
+  }
+  .caso-card-title {
+    font-family: var(--serif); font-size: clamp(18px, 2vw, 26px);
+    font-weight: 500; letter-spacing: -0.02em; line-height: 1.15;
+    color: var(--ink); transition: color .2s;
+  }
+  .caso-card:hover .caso-card-title { color: var(--ink); }
+  .caso-card-arr {
+    margin-top: 16px; font-size: 18px; color: var(--ink-ghost);
+    transition: transform .2s, color .2s;
+  }
+  .caso-card:hover .caso-card-arr { transform: translateX(6px); color: var(--ink); }
+  @media (max-width: 720px) { .casos-grid { grid-template-columns: 1fr; } }
+
+  /* ── CONTACT ── */
+  .contact {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 120px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact::before {
+    content: "";
+    position: absolute;
+    right: -8%; top: -20%;
+    width: 560px; height: 560px;
+    background: radial-gradient(circle at center,
+      color-mix(in srgb, var(--accent) 40%, transparent),
+      transparent 65%);
+    pointer-events: none;
+  }
+  .contact-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 64px;
+  }
+  .contact-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(40px, 5.2vw, 84px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    color: var(--paper);
+    text-wrap: balance;
+    max-width: 14ch;
+  }
+  .contact-title em { color: var(--accent); font-style: italic; font-weight: 400; }
+  .contact-lede {
+    margin-top: 28px;
+    font-family: var(--body);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.52;
+    color: color-mix(in srgb, var(--paper) 78%, transparent);
+    max-width: 46ch;
+  }
+  .contact-ctas {
+    margin-top: 36px;
+    display: flex; gap: 12px; flex-direction: column; align-items: flex-start;
+  }
+  .contact .btn {
+    border-color: color-mix(in srgb, var(--paper) 35%, transparent);
+    color: var(--paper);
+  }
+  .contact .btn:hover { border-color: var(--paper); }
+  .contact .btn-primary {
+    background: var(--accent); color: var(--ink); border-color: var(--accent);
+  }
+  .contact .btn-primary:hover { background: var(--paper); border-color: var(--paper); }
+  .contact-card {
+    border: 1px solid color-mix(in srgb, var(--paper) 22%, transparent);
+    padding: 28px;
+    display: flex; flex-direction: column; gap: 22px;
+    background: color-mix(in srgb, var(--paper) 4%, transparent);
+  }
+  .contact-card h4 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: color-mix(in srgb, var(--paper) 55%, transparent);
+  }
+  .contact-row { display: flex; flex-direction: column; gap: 4px; }
+  .contact-row .k {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--paper) 50%, transparent);
+  }
+  .contact-row .v {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--paper);
+  }
+  .contact-row .v.em { color: var(--accent); }
+  .contact-row .v a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--paper) 35%, transparent);
+    transition: border-color .2s, color .2s;
+  }
+  .contact-row .v a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  @media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--ink);
+    color: color-mix(in srgb, var(--paper) 60%, transparent);
+    padding: 36px 0 40px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border-top: 1px solid color-mix(in srgb, var(--paper) 15%, transparent);
+  }
+  .footer-row {
+    display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  }
+  .footer b { color: var(--paper); font-weight: 500; }
+  .footer-lang { cursor: pointer; }
+  /* ── EQUIPO DEL PROYECTO ── */
+  .caso-equipo {
+    padding: 72px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .caso-equipo-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 36px;
+  }
+  .caso-equipo-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 18px;
+    grid-auto-rows: auto;
+    row-gap: 0;
+  }
+  @media (max-width: 720px) {
+    .caso-equipo-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .caso-member {
+    grid-row: span 3;
+    display: grid;
+    grid-template-rows: subgrid;
+    margin-bottom: 32px;
+  }
+  .caso-member-photo {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: var(--ink);
+    align-self: stretch;
+  }
+  .caso-member-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.15);
+    transition: filter .4s;
+    mix-blend-mode: luminosity;
+  }
+  .caso-member-photo .wash {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg,
+      color-mix(in srgb, var(--accent) 75%, transparent),
+      color-mix(in srgb, var(--ink) 75%, transparent));
+    mix-blend-mode: multiply;
+    transition: opacity .3s;
+  }
+  .caso-member-photo .halftone {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.2) 1px, transparent 1.2px);
+    background-size: 3.5px 3.5px;
+    mix-blend-mode: screen;
+    opacity: 0.3;
+    transition: opacity .3s;
+  }
+  .caso-member:hover .wash { opacity: 0; }
+  .caso-member:hover .halftone { opacity: 0; }
+  .caso-member:hover .caso-member-photo img { filter: grayscale(0) contrast(1); mix-blend-mode: normal; }
+  .caso-member-photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 16px; color: var(--ink-ghost);
+    background: var(--paper-3);
+  }
+  .caso-member-name {
+    font-family: 'Rubik', sans-serif; font-weight: 600; font-size: 13px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink); line-height: 1.2; padding-top: 10px;
+  }
+  .caso-member-role {
+    font-family: var(--body); font-size: 12px;
+    margin-top: 4px;
+  }
+  .caso-member.is-lead .caso-member-name { color: var(--accent); }
+  .caso-member.is-lead .caso-member-photo { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .caso-member-divider { display: none; }
+</style>
+</head>
+<body data-mode="paper">
+
+  <!-- ── TOPBAR ── -->
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Chakakuna">CHAKAKUNA</a>
+    <nav class="nav">
+      <a href="index.html#filosofia" data-i18n-es="Propósito" data-i18n-en="Purpose">Propósito</a>
+      <a href="index.html#servicios" data-i18n-es="Servicios" data-i18n-en="Services">Servicios</a>
+      <a href="index.html#casos" data-i18n-es="Casos" data-i18n-en="Cases">Casos</a>
+      <a href="about-us.html" data-i18n-es="Nosotras" data-i18n-en="About">Nosotras</a>
+    </nav>
+    <div class="nav-right">
+      <span class="nav-lang" id="langToggle" role="button" tabindex="0">
+        <b data-lang-btn="es">ES</b> / <span data-lang-btn="en">EN</span>
+      </span>
+      <a href="#contacto" class="nav-cta" data-i18n-es="Conversemos <span>→</span>" data-i18n-en="Let's talk <span>→</span>">Conversemos <span>→</span></a>
+    </div>
+  </header>
+
+  <!-- ── BREADCRUMB ── -->
+  <div class="breadcrumb wrap">
+    <a href="index.html#casos" data-i18n-es="← Volver a casos" data-i18n-en="← Back to cases">← Volver a casos</a>
+  </div>
+
+  <!-- ── CASE HERO ── -->
+  <div class="case-hero">
+    <div class="case-hero-inner">
+    <div class="case-meta-top">
+      <span class="client">Equimundo</span>
+      <span class="dot">·</span>
+      <span data-i18n-es="Educación · Género" data-i18n-en="Education · Gender">Educación · Género</span>
+      <span class="dot">·</span>
+      <span>2024–2025</span>
+    </div>
+    <h1 class="case-hero-title" data-i18n-es="NUEVAS CONVERSACIONES ENTRE PADRES E HIJOS" data-i18n-en="NEW CONVERSATIONS BETWEEN PARENTS AND CHILDREN">NUEVAS CONVERSACIONES ENTRE PADRES E HIJOS</h1>
+    <p class="case-hero-lede" data-i18n-es="Adaptamos una herramienta global para promover masculinidades saludables en familias latinoamericanas, sin perder el rigor del enfoque original." data-i18n-en="We adapted a global tool to promote healthy masculinities in Latin American families without losing the rigor of the original approach.">Adaptamos una herramienta global para promover masculinidades saludables en familias latinoamericanas, sin perder el rigor del enfoque original.</p>
+    <div class="case-cover">
+      <img src="img/equimundo-boyhood-initiative-chakakuna.jpg" alt="Adaptación cultural de herramienta para familias latinoamericanas" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="case-cover-placeholder" style="display:none;">img/equimundo-boyhood-initiative-chakakuna.jpg</div>
+    </div>
+    </div>
+  </div>
+
+  <!-- ── CASE BODY ── -->
+  <div class="case-body">
+
+    <!-- Sidebar -->
+    <aside class="case-sidebar">
+      <div class="sidebar-label" data-i18n-es="Cliente" data-i18n-en="Client">Cliente</div>
+      <div class="sidebar-value accent">Equimundo</div>
+
+      <div class="sidebar-label" data-i18n-es="Sector" data-i18n-en="Sector">Sector</div>
+      <div class="sidebar-value" data-i18n-es="Educación · Género" data-i18n-en="Education · Gender">Educación · Género</div>
+
+      <div class="sidebar-label" data-i18n-es="Territorio" data-i18n-en="Territory">Territorio</div>
+      <div class="sidebar-value" data-i18n-es="Perú · Bolivia · Colombia" data-i18n-en="Peru · Bolivia · Colombia">Perú · Bolivia · Colombia</div>
+
+      <div class="sidebar-label" data-i18n-es="Año" data-i18n-en="Year">Año</div>
+      <div class="sidebar-value">2024–2025</div>
+
+      <div class="sidebar-label" data-i18n-es="Duración" data-i18n-en="Duration">Duración</div>
+      <div class="sidebar-value" data-i18n-es="16 semanas" data-i18n-en="16 weeks">16 semanas</div>
+
+      <div class="sidebar-label" data-i18n-es="Enfoque" data-i18n-en="Approach">Enfoque</div>
+      <div style="display:flex; flex-wrap: wrap; margin-top: 4px;">
+        <span class="sidebar-tag">Adaptación cultural</span>
+        <span class="sidebar-tag">Co-creación</span>
+        <span class="sidebar-tag">Familias</span>
+        <span class="sidebar-tag">Testeo iterativo</span>
+        <span class="sidebar-tag">Diseño participativo</span>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <main class="case-content">
+
+      <!-- El reto -->
+      <div class="reto">
+        <div class="section-label" data-i18n-es="El reto" data-i18n-en="The challenge">El reto</div>
+        <h2 class="reto-title" data-i18n-es="Adaptar una herramienta global para las familias latinoamericanas" data-i18n-en="Adapting a global tool for Latin American families">Adaptar una herramienta global para las familias latinoamericanas</h2>
+        <div class="reto-body">
+          <p data-i18n-es="La Global Boyhood Initiative de Equimundo tenía un set de tarjetas para promover masculinidades saludables en familias latinoamericanas. El problema era el ajuste cultural: la herramienta había sido diseñada para un contexto anglocéntrico y no resonaba con las familias de la región." data-i18n-en="Equimundo's Global Boyhood Initiative had a set of cards to promote healthy masculinities in Latin American families. The problem was cultural fit: the tool had been designed for an Anglocentric context and did not resonate with families in the region.">La Global Boyhood Initiative de Equimundo tenía un set de tarjetas para promover masculinidades saludables en familias latinoamericanas. El problema era el ajuste cultural: la herramienta había sido diseñada para un contexto anglocéntrico y no resonaba con las familias de la región.</p>
+          <p data-i18n-es="Había que adaptar la herramienta sin perder el rigor del enfoque original, escuchando cómo niñas, niños, adolescentes y padres reaccionaban a cada pregunta, imagen y situación propuesta." data-i18n-en="The tool needed to be adapted without losing the rigor of the original approach, listening to how children, adolescents, and parents reacted to each question, image, and proposed situation.">Había que adaptar la herramienta sin perder el rigor del enfoque original, escuchando cómo niñas, niños, adolescentes y padres reaccionaban a cada pregunta, imagen y situación propuesta.</p>
+        </div>
+      </div>
+
+      <!-- Resultado -->
+      <div class="resultado">
+        <div class="section-label" style="margin-bottom:14px;" data-i18n-es="El resultado" data-i18n-en="The result">El resultado</div>
+        <p data-i18n-es="El rediseño de las tarjetas transformó la comunicación familiar: los niños ahora comprenden y expresan sus emociones más complejas con naturalidad, generando conversaciones profundas y espontáneas. Esta nueva herramienta derribó jerarquías, instalando una relación horizontal basada en la escucha activa entre padres e hijos." data-i18n-en="The redesign of the cards transformed family communication: children now understand and express their more complex emotions naturally, generating deep and spontaneous conversations. This new tool broke down hierarchies, establishing a horizontal relationship based on active listening between parents and children.">El rediseño de las tarjetas transformó la comunicación familiar: los niños ahora comprenden y expresan sus emociones más complejas con naturalidad, generando conversaciones profundas y espontáneas. Esta nueva herramienta derribó jerarquías, instalando una relación horizontal basada en la escucha activa entre padres e hijos.</p>
+      </div>
+
+      <!-- Lo que hicimos -->
+      <div class="proceso">
+        <div class="section-label">El proceso</div>
+
+        <div class="proceso-step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <h3 class="step-title" data-i18n-es="Co-creación iterativa en 3 países" data-i18n-en="Iterative co-creation across 3 countries">Co-creación iterativa en 3 países</h3>
+            <p class="step-text" data-i18n-es="Realizamos 46 sesiones intensivas entre 2024 y 2025 en Perú, Bolivia y Colombia. Usamos mapas de calor con emojis con niños de 4 a 13 años para capturar reacciones no verbales, y co-creación de escenarios con padres para testear la calidez lingüística y la resonancia cultural de cada pregunta disparadora." data-i18n-en="We conducted 46 intensive sessions between 2024 and 2025 in Peru, Bolivia, and Colombia. We used emoji heat maps with children aged 4 to 13 to capture nonverbal reactions, and scenario co-creation with parents to test the linguistic warmth and cultural resonance of each prompt.">Realizamos 46 sesiones intensivas entre 2024 y 2025 en Perú, Bolivia y Colombia. Usamos mapas de calor con emojis con niños de 4 a 13 años para capturar reacciones no verbales, y co-creación de escenarios con padres para testear la calidez lingüística y la resonancia cultural de cada pregunta disparadora.</p>
+            <div class="step-img">
+              <img src="img/caso-equimundo-co-creacion-familias-chakakuna.jpg" alt="Co-creación con familias latinoamericanas" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class="wash"></div>
+              <div class="halftone"></div>
+              <div class="step-img-placeholder" style="display:none;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                img/caso-equimundo-co-creacion-familias-chakakuna.jpg
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="proceso-step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <h3 class="step-title" data-i18n-es="La representación importa más que el mensaje" data-i18n-en="Representation matters more than the message">La representación importa más que el mensaje</h3>
+            <p class="step-text" data-i18n-es="La iconografía abstracta generaba distancia emocional. Para estas familias, sentirse representadas significaba ver ilustraciones que reflejaran sus tonos de piel, sus entornos y sus expresiones. También descubrimos que los temas del mundo digital, como TikTok y ciberacoso, eran el punto de dolor más urgente para los padres y estaban casi ausentes en la versión global." data-i18n-en="Abstract iconography created emotional distance. For these families, feeling represented meant seeing illustrations that reflected their skin tones, environments, and expressions. We also found that digital-world topics, such as TikTok and cyberbullying, were the most urgent pain point for parents and were almost absent from the global version.">La iconografía abstracta generaba distancia emocional. Para estas familias, sentirse representadas significaba ver ilustraciones que reflejaran sus tonos de piel, sus entornos y sus expresiones. También descubrimos que los temas del mundo digital, como TikTok y ciberacoso, eran el punto de dolor más urgente para los padres y estaban casi ausentes en la versión global.</p>
+            <div class="step-img focus-lower">
+              <img src="img/caso-equimundo-representacion-cultural-chakakuna.jpg" alt="Representación cultural en herramienta para familias" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class="wash"></div>
+              <div class="halftone"></div>
+              <div class="step-img-placeholder" style="display:none;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                img/caso-equimundo-representacion-cultural-chakakuna.jpg
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="proceso-step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <h3 class="step-title" data-i18n-es="Un producto validado por las propias familias" data-i18n-en="A product validated by families themselves">Un producto validado por las propias familias</h3>
+            <p class="step-text" data-i18n-es="Rediseñamos la herramienta como Comparte conmigo: un sistema visual con menú temático codificado por colores, que pasa del interrogatorio a la invitación. El 100% de los conceptos centrales fue adaptado a un lenguaje visual local validado, con un aumento verificado en la duración de las conversaciones familiares durante la prueba beta." data-i18n-en="We redesigned the tool as Share with me: a visual system with a color-coded thematic menu that moves from interrogation to invitation. One hundred percent of the central concepts were adapted into a validated local visual language, with a verified increase in the length of family conversations during the beta test.">Rediseñamos la herramienta como Comparte conmigo: un sistema visual con menú temático codificado por colores, que pasa del interrogatorio a la invitación. El 100% de los conceptos centrales fue adaptado a un lenguaje visual local validado, con un aumento verificado en la duración de las conversaciones familiares durante la prueba beta.</p>
+            <div class="step-img">
+              <img src="img/caso-equimundo-comparte-conmigo-chakakuna.jpg" alt="Producto Comparte conmigo validado con familias" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class="wash"></div>
+              <div class="halftone"></div>
+              <div class="step-img-placeholder" style="display:none;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                img/caso-equimundo-comparte-conmigo-chakakuna.jpg
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /proceso -->
+
+      <!-- Equipo del proyecto -->
+      <div class="caso-equipo">
+        <div class="caso-equipo-label" >El Equipo</div>
+
+        <div class="caso-equipo-grid">
+
+          <div class="caso-member is-lead">
+            <div class="caso-member-photo">
+              <img src="img/melanie-lopez-del-pozo-chakakuna.jpg" alt="Melanie López del Pozo" onerror="this.style.display='none'">
+              <div class="wash"></div>
+              <div class="halftone"></div>
+            </div>
+            <div class="caso-member-name">Melanie López del Pozo</div>
+            <div class="caso-member-role">Líder de proyecto</div>
+          </div>
+
+          <div class="caso-member is-lead">
+            <div class="caso-member-photo">
+              <img src="img/luz-alcantara-chakakuna.png" alt="Luz Alcántara" onerror="this.style.display='none'">
+              <div class="wash"></div>
+              <div class="halftone"></div>
+            </div>
+            <div class="caso-member-name">Luz Alcántara</div>
+            <div class="caso-member-role">Líder de proyecto</div>
+          </div>
+
+          <div class="caso-member">
+            <div class="caso-member-photo">
+              <img src="img/lucero-cuba-chakakuna.JPG" alt="Lucero Cuba" onerror="this.style.display='none'">
+              <div class="wash"></div>
+              <div class="halftone"></div>
+            </div>
+            <div class="caso-member-name">Lucero Cuba</div>
+            <div class="caso-member-role">&nbsp;</div>
+          </div>
+
+          <div class="caso-member">
+            <div class="caso-member-photo">
+              <img src="img/elena-flores-chakakuna.png" alt="Elena Flores" onerror="this.style.display='none'">
+              <div class="wash"></div>
+              <div class="halftone"></div>
+            </div>
+            <div class="caso-member-name">Elena Flores</div>
+            <div class="caso-member-role">&nbsp;</div>
+          </div>
+
+          <div class="caso-member">
+            <div class="caso-member-photo">
+              <img src="img/ella-gonez-chakakuna.png" alt="Ella Goñez" onerror="this.style.display='none'">
+              <div class="wash"></div>
+              <div class="halftone"></div>
+            </div>
+            <div class="caso-member-name">Ella Goñez</div>
+            <div class="caso-member-role">&nbsp;</div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ── MÁS CASOS ── -->
+  <section class="mas-casos">
+    <div class="wrap">
+      <div class="mas-casos-head">
+        <span class="mas-casos-title" data-i18n-es="Más casos" data-i18n-en="More cases">Más casos</span>
+        <a href="index.html#casos" class="mas-casos-link" data-i18n-es="Ver todos →" data-i18n-en="View all →">Ver todos →</a>
+      </div>
+      <div class="casos-grid" id="masCasosGrid">
+        <!-- populated by script -->
+      </div>
+
+  <script>
+  (function () {
+    // ── Catalog of all cases ────────────────────────────────────────────────
+    // Each entry: { url, img, tag, title }
+    // Each card uses the explicit title, tag, and image below; fetch only refreshes if available.
+    const ALL_CASOS = [
+      {
+        url: 'caso-unica-cajamarca-innovacion-rural.html',
+        img: 'img/unica-desarrollo-innovacion-rural-chakakuna.jpg',
+        tag: 'Minería · Inversión social · 2024',
+        title: 'EXPLORACIÓN DE IMPACTO EN CAJAMARCA',
+        accent: 'var(--orange)'
+      },
+      {
+        url: 'caso-oxfam-infraestructuras-cuidado.html',
+        img: 'img/oxfam-redes-de-cuidado-chakakuna.jpg',
+        tag: 'Cooperación internacional · Política pública · 2022',
+        title: 'INFRAESTRUCTURAS DE CUIDADO',
+        accent: 'var(--orange)'
+      },
+      {
+        url: 'caso-fintech-economia-secreta.html',
+        img: 'img/fintech-futuras-generaciones-chakakuna.jpg',
+        tag: 'Fintech · Educación financiera · 2026',
+        title: 'LA ECONOMÍA SECRETA DE LOS NIÑOS',
+        accent: 'var(--mint)'
+      },
+      {
+        url: 'caso-equimundo-nuevas-conversaciones.html',
+        img: 'img/equimundo-boyhood-initiative-chakakuna.jpg',
+        tag: 'Educación · Género · 2024–2025',
+        title: 'NUEVAS CONVERSACIONES ENTRE PADRES E HIJOS',
+        accent: 'var(--orange)'
+      },
+      {
+        url: 'caso-makers150-negocios-invisibles.html',
+        img: 'img/retail-ferreterias-chakakuna.jpg',
+        tag: 'Retail · Construcción · 2024',
+        title: 'INSEGURIDAD URBANA Y NEGOCIOS INVISIBLES',
+        accent: 'var(--mint)'
+      },
+    ];
+
+    const CURRENT = 'caso-equimundo-nuevas-conversaciones.html';
+    const grid = document.getElementById('masCasosGrid');
+    if (!grid) return;
+
+    // Pick 2 random cases excluding the current one
+    const others = ALL_CASOS.filter(c => c.url !== CURRENT);
+    const shuffled = others.sort(() => Math.random() - 0.5).slice(0, 2);
+
+    // Render cards immediately with catalog data
+    shuffled.forEach((caso, i) => {
+      const card = document.createElement('a');
+      card.href = caso.url;
+      card.className = 'caso-card';
+      card.style.setProperty('--card-accent', caso.accent || 'var(--mint)');
+      card.innerHTML = `
+        <div class="caso-card-img">
+          <img src="${caso.img}" alt="" onerror="this.parentNode.style.background='var(--paper-3)'">
+        </div>
+        <div class="caso-card-info">
+          <div class="caso-card-tag">${caso.tag}</div>
+          <div class="caso-card-title" id="masCasoTitle${i}">${caso.title}</div>
+          <div class="caso-card-arr">↗</div>
+        </div>`;
+      grid.appendChild(card);
+
+      // Fetch the real title from the case HTML
+      fetch(caso.url)
+        .then(r => { if (!r.ok) throw new Error(); return r.text(); })
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          // Try h1.case-hero-title first, fallback to <title>
+          const h1 = doc.querySelector('.case-hero-title');
+          const title = h1
+            ? h1.textContent.trim()
+            : doc.title.split(' - ')[0].trim();
+          const el = document.getElementById(`masCasoTitle${i}`);
+          if (el && title) el.textContent = title;
+        })
+        .catch(() => {
+          // Keep catalog title if fetch fails
+        });
+    });
+  })();
+  </script>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section class="contact" id="contacto">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <h2 class="contact-title">Conversemos</h2>
+          <p class="contact-lede" data-i18n-es="Escríbenos lo que tú o tu equipo tienen en mente. No tiene que ser muy claro. Sin formularios, sin presentaciones acartonadas." data-i18n-en="Write us what you or your team have in mind. It doesn't need to be fully formed. No forms, no stiff pitch decks.">
+            Escríbenos lo que tú o tu equipo tienen en mente. No tiene que ser muy claro. Sin formularios, sin presentaciones acartonadas.
+          </p>
+          <div class="contact-ctas">
+            <a href="mailto:hola@chakakuna.com" class="btn" style="border-color:rgba(242,237,228,0.3); text-decoration: underline; text-decoration-color: var(--pink); text-underline-offset: 4px; text-decoration-thickness: 1.5px;">Escribir a hola@chakakuna.com <span class="arr">→</span></a>
+            <a href="https://wa.me/51910216934" target="_blank" rel="noopener" class="btn" style="border-color:rgba(242,237,228,0.3); text-decoration: underline; text-decoration-color: var(--mint); text-underline-offset: 4px; text-decoration-thickness: 1.5px;">Escribe al WhatsApp de participantes <span class="arr">→</span></a>
+          </div>
+        </div>
+        <div class="contact-card">
+          <h4>Dónde nos encuentras</h4>
+          <div class="contact-row">
+            <span class="k">Estudio</span>
+            <span class="v">Los Olivos · Lima · Perú</span>
+          </div>
+          <div class="contact-row">
+            <span class="k">Correo electrónico</span>
+            <span class="v em">hola@chakakuna.com</span>
+          </div>
+          <div class="contact-row">
+            <span class="k">LinkedIn</span>
+            <span class="v"><a href="https://www.linkedin.com/company/chakakuna/" target="_blank" rel="noopener">in/chakakuna</a></span>
+          </div>
+          <div class="contact-row">
+            <span class="k">Instagram</span>
+            <span class="v"><a href="https://www.instagram.com/chakakuna_/" target="_blank" rel="noopener">ig/chakakuna_</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="wrap footer-row">
+      <div><b>Chakakuna</b> — <span data-i18n-es="Estudio de investigación aplicada" data-i18n-en="Applied research studio">Estudio de investigación aplicada</span> © 2026</div>
+      <div>Lima · <span data-i18n-es="Perú · fundado 2021" data-i18n-en="Peru · founded 2021">Perú · fundado 2021</span></div>
+      <div><span class="nav-lang footer-lang" id="langToggleFooter" role="button" tabindex="0"><b data-lang-btn="es">ES</b> / <span data-lang-btn="en">EN</span></span> · <span data-i18n-es="Legales · Privacidad" data-i18n-en="Legal · Privacy">Legales · Privacidad</span></div>
+    </div>
+  </footer>
+
+  <!-- ── i18n ── -->
+  <script>
+  (function () {
+    function setLang(lang) {
+      const useEN = lang === 'en';
+      document.querySelectorAll('[data-i18n-es]').forEach(el => {
+        const val = el.getAttribute(useEN ? 'data-i18n-en' : 'data-i18n-es');
+        if (val !== null) el.innerHTML = val;
+      });
+      document.documentElement.lang = useEN ? 'en' : 'es';
+      document.querySelectorAll('#langToggle, #langToggleFooter').forEach(tog => {
+        tog.querySelectorAll('[data-lang-btn]').forEach(b => {
+          b.classList.toggle('is-active', b.dataset.langBtn === (useEN ? 'en' : 'es'));
+        });
+      });
+      try { localStorage.setItem('ckLang', useEN ? 'en' : 'es'); } catch(e){}
+    }
+
+    function init() {
+      let saved = 'es';
+      try { saved = localStorage.getItem('ckLang') || 'es'; } catch(e){}
+      setLang(saved);
+      document.querySelectorAll('#langToggle, #langToggleFooter').forEach(tog => {
+        tog.addEventListener('click', () => {
+          setLang(document.documentElement.lang === 'es' ? 'en' : 'es');
+        });
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  })();
+  </script>
+
+</body>
+</html>
