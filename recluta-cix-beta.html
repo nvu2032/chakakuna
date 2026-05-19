@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chakakuna × CIX: Reclutamiento de Participantes 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Rubik:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #3D3D5B;
+      --accent: #4DDFB8;
+      --accent-light: #e6faf5;
+      --text: #1a1a2e;
+      --text-muted: #6b6b85;
+      --border: #e0e0ec;
+      --bg-soft: #f7f7fb;
+      --font-body: 'Manrope', sans-serif;
+      --font-title: 'Rubik', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--text);
+      background: #fff;
+    }
+
+    .page { max-width: 860px; margin: 0 auto; padding: 48px 56px; }
+
+    /* Control de saltos de página */
+    .page-break {
+      break-before: page;
+      page-break-before: always; /* Compatibilidad con navegadores antiguos */
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 20px;
+      border-bottom: 3px solid var(--primary);
+      margin-bottom: 32px;
+    }
+
+    .brand { font-family: var(--font-title); font-size: 26px; color: var(--primary); letter-spacing: -0.5px; }
+    .brand .x { color: var(--accent); margin: 0 4px; }
+    .header-sub { font-size: 11px; color: var(--text-muted); letter-spacing: 0.8px; text-transform: uppercase; margin-top: 4px; }
+    .header-contact { font-size: 11.5px; color: var(--text-muted); text-align: right; line-height: 1.8; }
+    .header-contact a { color: var(--primary); text-decoration: none; }
+
+    /* Section label */
+    .section-label { 
+      font-size: 10px; 
+      font-weight: 600; 
+      letter-spacing: 1.2px; 
+      text-transform: uppercase; 
+      color: var(--accent); 
+      margin-bottom: 10px; 
+    }
+
+    /* Divider */
+    .divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+    /* Lead text */
+    .lead-text { font-size: 13.5px; line-height: 1.75; color: var(--text); }
+    .lead-text strong { color: var(--primary); font-weight: 600; }
+    .lead-text p + p { margin-top: 12px; }
+
+    /* Estándares */
+    .standards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .standard-item { background: var(--bg-soft); border-radius: 8px; padding: 12px 14px; border-left: 3px solid var(--primary); }
+    .std-title { font-family: var(--font-title); font-size: 12px; color: var(--primary); margin-bottom: 4px; }
+    .std-desc { font-size: 11.5px; color: var(--text-muted); line-height: 1.55; }
+
+    /* Cómo funciona */
+    .funcion-intro { font-size: 13.5px; line-height: 1.75; color: var(--text); margin-bottom: 20px; }
+    .funcion-intro em { font-style: normal; font-weight: 600; color: var(--primary); display: block; margin-bottom: 6px; }
+
+    .momento { margin-bottom: 18px; }
+    .momento-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .momento-num {
+      width: 26px; height: 26px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-title); font-size: 12px; color: var(--accent);
+      flex-shrink: 0;
+    }
+    .momento-title { font-family: var(--font-title); font-size: 14px; color: var(--primary); }
+    .momento-body { padding-left: 36px; }
+    .momento-body p { font-size: 13px; color: var(--text); line-height: 1.7; margin-bottom: 10px; }
+    .anticipacion {
+      font-size: 12px; font-weight: 600; color: var(--primary);
+      background: var(--accent-light);
+      display: inline-block; padding: 3px 10px; border-radius: 4px; margin-top: 2px;
+    }
+
+    .sub-steps { display: flex; flex-direction: column; gap: 8px; }
+    .sub-step { background: var(--bg-soft); border-radius: 8px; padding: 10px 14px; border-top: 2px solid var(--accent); }
+    .sub-step-label { font-size: 10px; font-weight: 600; color: var(--accent); letter-spacing: 0.5px; margin-bottom: 3px; }
+    .sub-step-title { font-family: var(--font-title); font-size: 12px; color: var(--primary); margin-bottom: 4px; }
+    .sub-step-desc { font-size: 11.5px; color: var(--text-muted); line-height: 1.55; }
+
+    /* Tarifas */
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .price-card { border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .price-card.featured { border-color: var(--accent); }
+    .price-card-header { background: var(--primary); padding: 14px 18px; }
+    .price-card-header .tag {
+      display: inline-block; background: var(--accent); color: var(--primary);
+      font-size: 9.5px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 20px; margin-bottom: 6px;
+    }
+    .price-card-title { font-family: var(--font-title); font-size: 14px; color: #fff; line-height: 1.3; }
+    .price-card-subtitle { font-size: 10.5px; color: rgba(255,255,255,0.8); margin-top: 2px; }
+    .price-card-body { padding: 14px 18px; }
+    .price-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+    .price-row:last-child { border-bottom: none; }
+    .price-row-label { color: var(--text-muted); }
+    .price-row-value { font-weight: 600; color: var(--text); }
+    .price-totals { display: grid; grid-template-columns: 1fr 1fr; background: var(--bg-soft); }
+    .total-col { padding: 12px 18px; }
+    .total-col:first-child { border-right: 1px solid var(--border); }
+    .total-mode { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .total-amount { font-family: var(--font-title); font-size: 18px; color: var(--primary); }
+    .total-pax { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; }
+    .saving-badge { display: inline-block; background: var(--accent-light); color: #1a7a60; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; margin-top: 4px; }
+    .price-note { font-size: 10.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.6; }
+
+    /* Condiciones */
+    .conditions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .condition-item { padding: 10px 12px; border-left: 2px solid var(--border); }
+    .condition-title { font-weight: 600; font-size: 12px; color: var(--primary); margin-bottom: 3px; }
+    .condition-desc { font-size: 11.5px; color: var(--text-muted); line-height: 1.55; }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); padding-top: 18px; margin-top: 24px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-brand { font-family: var(--font-title); font-size: 13px; color: var(--primary); }
+    .footer-brand .x { color: var(--accent); }
+    .footer-left { font-size: 11px; color: var(--text-muted); }
+    .footer-right { font-size: 11px; color: var(--text-muted); text-align: right; }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .page { padding: 28px 20px; }
+      .header { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .header-contact { text-align: left; }
+      .standards-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .conditions-grid { grid-template-columns: 1fr; }
+      .price-totals { grid-template-columns: 1fr; }
+      .total-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .price-row { flex-direction: column; align-items: flex-start; gap: 2px; }
+      .price-row-value { font-size: 13px; }
+      .momento-body { padding-left: 0; }
+      .footer { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .footer-right { text-align: left; }
+      .brand { font-size: 20px; }
+      .lead-text { font-size: 13px; }
+      .funcion-intro { font-size: 13px; }
+    }
+
+    /* Print */
+    @media print {
+      body { font-size: 11.5px; }
+      .page { padding: 40px 56px; max-width: 100%; }
+      .divider { display: none; }
+      .page-break + .divider, .divider + .page-break { display: none; }
+      .standard-item, .sub-step, .price-card, .condition-item { break-inside: avoid; }
+      a { color: inherit; }
+    }
+    @page { margin: 0; size: A4; }
+  </style>
+  <style>
+    #gate {
+      position: fixed; inset: 0;
+      background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+      font-family: 'Manrope', sans-serif;
+    }
+    .gate-box { text-align: center; max-width: 320px; width: 100%; padding: 0 24px; }
+    .gate-brand { font-family: 'Rubik', sans-serif; font-size: 22px; color: #3D3D5B; letter-spacing: -0.5px; margin-bottom: 6px; }
+    .gate-brand .x { color: #4DDFB8; margin: 0 4px; }
+    .gate-sub { font-size: 11px; color: #6b6b85; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 32px; }
+    .gate-input { width: 100%; padding: 10px 14px; font-family: 'Manrope', sans-serif; font-size: 13px; border: 1.5px solid #e0e0ec; border-radius: 6px; outline: none; color: #1a1a2e; margin-bottom: 10px; transition: border-color 0.15s; }
+    .gate-input:focus { border-color: #3D3D5B; }
+    .gate-input.error { border-color: #e05555; }
+    .gate-btn { width: 100%; padding: 10px; background: #3D3D5B; color: #fff; font-family: 'Rubik', sans-serif; font-size: 13px; border: none; border-radius: 6px; cursor: pointer; transition: opacity 0.15s; }
+    .gate-btn:hover { opacity: 0.85; }
+    .gate-error { font-size: 11px; color: #e05555; margin-top: 8px; min-height: 16px; }
+  </style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-box">
+    <div class="gate-brand">CHAKAKUNA <span class="x">×</span> CIX</div>
+    <div class="gate-sub">Acceso restringido</div>
+    <input class="gate-input" id="pwd" type="password" placeholder="Contraseña" autofocus />
+    <button class="gate-btn" onclick="checkPwd()">Ingresar</button>
+    <div class="gate-error" id="gate-error"></div>
+  </div>
+</div>
+
+<script>
+  function checkPwd() {
+    const val = document.getElementById('pwd').value;
+    const input = document.getElementById('pwd');
+    if (val === 'research') {
+      document.getElementById('gate').style.display = 'none';
+    } else {
+      input.classList.add('error');
+      document.getElementById('gate-error').textContent = 'Contraseña incorrecta.';
+      input.value = '';
+      input.focus();
+    }
+  }
+  document.getElementById('pwd').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPwd();
+  });
+</script>
+
+<div class="page">
+
+  <div class="header">
+    <div>
+      <div class="brand">Chakakuna <span class="x">×</span> CIX</div>
+      <div class="header-sub">Reclutamiento de participantes para research · 2026</div>
+    </div>
+    <div class="header-contact">
+      <a href="mailto:hola@chakakuna.com">hola@chakakuna.com</a><br>
+      <a href="https://chakakuna.com">chakakuna.com</a>
+    </div>
+  </div>
+
+  <div class="section-label">El problema que resolvemos</div>
+  <div class="lead-text">
+    <p>El equipo de research de CIX sabe investigar. El problema no es la metodología — es conseguir las personas correctas, a tiempo, con el perfil que el estudio necesita. Una sesión con participantes equivocados no produce datos útiles. Una sesión cancelada por no-shows retrasa decisiones que ya tienen fecha.</p>
+    <p>Los proveedores convencionales de reclutamiento operan con lógica de call center: confirman un número, entregan una lista, y lo que llegue, llegó. El riesgo de calidad queda del lado del equipo. Nosotros operamos con lógica de research: entendemos por qué las personas participan, cómo se comportan cuando no tienen claro por qué las citaron, y qué condiciones hacen que una conversación de calidad sea posible antes de que empiece.</p>
+    <p>Chakakuna es el soporte de reclutamiento que hace que la investigación del equipo de CIX ocurra con las personas correctas, en las condiciones correctas, cada vez.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Estándares de experiencia del participante</div>
+  <div class="standards-grid">
+    <div class="standard-item">
+      <div class="std-title">El riesgo no es del equipo de CIX</div>
+      <div class="std-desc">Reclutamos un 20–25% más del número requerido. Si alguien no llega, activamos reemplazos. Facturamos únicamente por los participantes que efectivamente participaron.</div>
+    </div>
+    <div class="standard-item">
+      <div class="std-title">Contacto humano y personalizado</div>
+      <div class="std-desc">No automatizamos el primer contacto. Cada participante recibe atención de una persona real, con tono conversacional y claro — no un mensaje masivo.</div>
+    </div>
+    <div class="standard-item">
+      <div class="std-title">Consentimiento informado desde el inicio</div>
+      <div class="std-desc">El participante sabe exactamente qué es el estudio, quién usa la información y para qué, antes de comprometerse. Llegan preparados, no sorprendidos.</div>
+    </div>
+    <div class="standard-item">
+      <div class="std-title">Lenguaje adaptado al perfil</div>
+      <div class="std-desc">Para adultos mayores, usuarios de zonas rurales o personas con baja exposición a entornos digitales, el contacto se adapta en vocabulario, canal y ritmo.</div>
+    </div>
+  </div>
+
+
+  <div class="divider"></div>
+
+  <div class="page-break"></div>
+  
+  <div class="section-label">Cómo funciona el servicio</div>
+
+  <div class="funcion-intro">
+    <em>Soporte continuo, no proveedor puntual</em>
+    El servicio está disponible para el equipo de CIX de forma continua a lo largo del año — no se contrata por proyecto, se activa por bloque. Cada vez que el equipo identifica que necesita hablar con personas reales, ya sea para testear un flujo, explorar una hipótesis o validar un concepto, el proceso arranca en menos de 24 horas. Tres momentos desde el pedido hasta el participante en sesión:
+  </div>
+
+  <div class="momento">
+    <div class="momento-header">
+      <div class="momento-num">1</div>
+      <div class="momento-title">Activación</div>
+    </div>
+    <div class="momento-body">
+      <p>El equipo de CIX nos escribe con la necesidad. No hay formularios que llenar. En una conversación de 15 a 30 minutos, recogemos todo lo que necesitamos: quiénes son las personas, qué características importan, cuándo es la sesión y en qué formato. Nosotros preparamos la ficha de perfil y se la mandamos para que solo confirmen. Con eso, arrancamos.</p>
+      <span class="anticipacion">Anticipación mínima requerida: 5 días hábiles desde la activación hasta la sesión</span>
+    </div>
+  </div>
+
+  <div class="momento">
+    <div class="momento-header">
+      <div class="momento-num">2</div>
+      <div class="momento-title">Reclutamiento</div>
+    </div>
+    <div class="momento-body">
+      <div class="sub-steps">
+        <div class="sub-step">
+          <div class="sub-step-label">Días 1–2</div>
+          <div class="sub-step-title">Búsqueda y pre-filtro</div>
+          <div class="sub-step-desc">Identificamos y contactamos candidatos que cumplen el perfil. Aplicamos los criterios acordados con el equipo de CIX y validamos disponibilidad, interés y condiciones mínimas de participación. Reclutamos un 20–25% más del número requerido para absorber cancelaciones inevitables.</div>
+        </div>
+        <div class="sub-step">
+          <div class="sub-step-label">Días 3–4</div>
+          <div class="sub-step-title">Confirmación y preparación</div>
+          <div class="sub-step-desc">Confirmamos la participación con cada persona. Explicamos el propósito del estudio, el formato, la duración y los incentivos, sin letra chica. Enviamos instrucciones claras de acceso o llegada según la modalidad.</div>
+        </div>
+        <div class="sub-step">
+          <div class="sub-step-label">Día 5</div>
+          <div class="sub-step-title">Coordinación activa</div>
+          <div class="sub-step-desc">Recordatorio individual el día anterior. A partir de aquí mantenemos coordinación diaria con el equipo CIX, informando en tiempo real el estado de cada participante confirmado, gestionando imprevistos y activando reemplazos del buffer cuando es necesario. La lista es un organismo vivo hasta el momento de la sesión.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="momento">
+    <div class="momento-header">
+      <div class="momento-num">3</div>
+      <div class="momento-title">Cierre</div>
+    </div>
+    <div class="momento-body">
+      <p>Terminada la sesión, gestionamos la entrega de incentivos de forma puntual y en el formato adecuado al perfil del participante. Agradecemos a cada persona de manera personalizada y registramos su disponibilidad para próximos bloques. Facturamos únicamente por los participantes que efectivamente participaron.</p>
+    </div>
+  </div>
+
+
+  <div class="divider"></div>
+
+  <div class="page-break"></div>
+
+  <div class="section-label">Tarifas del servicio continuo</div>
+  <div class="pricing-grid">
+
+    <div class="price-card">
+      <div class="price-card-header">
+        <div class="tag" style="background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.8);">Para empezar</div>
+        <div class="price-card-title">Bloque piloto · 10 participantes</div>
+        <div class="price-card-subtitle">Sin compromiso. Para conocer cómo trabajamos antes de contratar el servicio continuo.</div>
+      </div>
+      <div class="price-card-body">
+        <div class="price-row">
+          <span class="price-row-label">Fee de servicio, remoto</span>
+          <span class="price-row-value">S/ 3,200</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-label">Fee de servicio, presencial</span>
+          <span class="price-row-value">S/ 4,200</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-label">Incentivos + 15% gestión (×10)</span>
+          <span class="price-row-value">S/ 1,725 – 2,300</span>
+        </div>
+      </div>
+      <div class="price-totals">
+        <div class="total-col">
+          <div class="total-mode">Remoto</div>
+          <div class="total-amount">S/ 4,925</div>
+          <div class="total-pax">S/ 493 por user</div>
+        </div>
+        <div class="total-col">
+          <div class="total-mode">Presencial</div>
+          <div class="total-amount">S/ 6,500</div>
+          <div class="total-pax">S/ 650 por user</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-card-header">
+        <div class="tag">Servicio continuo</div>
+        <div class="price-card-title">Paquete de 50 participantes</div>
+        <div class="price-card-subtitle">Descuento del 8% sobre el fee. Facturación por bloque completado · Renovable sin límite.</div>
+      </div>
+      <div class="price-card-body">
+        <div class="price-row">
+          <span class="price-row-label">Fee de servicio, remoto (×50)</span>
+          <span class="price-row-value">S/ 14,720</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-label">Fee de servicio, presencial (×50)</span>
+          <span class="price-row-value">S/ 19,320</span>
+        </div>
+        <div class="price-row">
+          <span class="price-row-label">Incentivos + 15% gestión (×50)</span>
+          <span class="price-row-value">S/ 8,625 – 11,500</span>
+        </div>
+      </div>
+      <div class="price-totals">
+        <div class="total-col">
+          <div class="total-mode">Remoto</div>
+          <div class="total-amount">S/ 23,345</div>
+          <div class="saving-badge">Ahorro S/ 1,280 · S/ 467 por user</div>
+        </div>
+        <div class="total-col">
+          <div class="total-mode">Presencial</div>
+          <div class="total-amount">S/ 27,945</div>
+          <div class="saving-badge">Ahorro S/ 1,680 · S/ 559 por user</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="price-note">
+    Precios no incluyen IGV. Los incentivos se liquidan a costo real al cierre de cada bloque, sin markup oculto.
+    El servicio continuo no tiene fecha de vencimiento: los bloques se activan según el ritmo de investigación del equipo, sin mínimo mensual.
+    Esta propuesta cubre perfiles NSE B, C, D y E en Lima y provincias.
+    Perfiles de alta dificultad (NSE A, gerentes, directivos) se cotizan por separado.
+  </p>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Condiciones operativas</div>
+  <div class="conditions-grid">
+    <div class="condition-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="margin-bottom:6px;display:block;" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#3D3D5B"/>
+      </svg>
+      <div class="condition-title">Cobertura geográfica</div>
+      <div class="condition-desc">Lima y provincias. En sesiones presenciales, recomendamos ir donde están las personas: mejor dato, menor carga sobre el participante. Si el equipo CIX prefiere citar en sus oficinas, se coordina movilidad adicional.</div>
+    </div>
+    <div class="condition-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="margin-bottom:6px;display:block;" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="#3D3D5B"/>
+      </svg>
+      <div class="condition-title">Reemplazos</div>
+      <div class="condition-desc">El buffer del 20–25% absorbe cancelaciones. Si un imprevisto no puede cubrirse, ese participante no se factura.</div>
+    </div>
+    <div class="condition-item">
+      <svg width="20" height="18" viewBox="0 0 32 24" fill="none" style="margin-bottom:6px;display:block;" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="16" cy="13" rx="15" ry="10" fill="#3D3D5B"/>
+        <ellipse cx="16" cy="13" rx="11" ry="6.5" fill="#f7f7fb"/>
+        <circle cx="11" cy="13" r="3.5" fill="#3D3D5B"/>
+        <circle cx="21" cy="13" r="3.5" fill="#3D3D5B"/>
+        <rect x="13" y="1" width="6" height="5" rx="1" fill="#3D3D5B"/>
+        <rect x="14.5" y="0" width="3" height="3" rx="1" fill="#3D3D5B"/>
+      </svg>
+      <div class="condition-title">Confidencialidad</div>
+      <div class="condition-desc">Los datos de los participantes se manejan con estricta confidencialidad. No compartimos bases de contactos con terceros.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-brand">Chakakuna <span class="x">×</span> CIX</div>
+      Chakakuna Laboratorio de Innovación S.A.C. · RUC 20613331850
+    </div>
+    <div class="footer-right">
+      hola@chakakuna.com<br>
+      chakakuna.com
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
