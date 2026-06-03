@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Territorial Intelligence for Impact Enablers — Chakakuna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Rubik:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #3d3d5b;
+      --ink-soft: #6b6b88;
+      --ink-muted: #9f9fb8;
+      --teal: #4ddfb8;
+      --pink: #ff8df4;
+      --bg: #ffffff;
+      --bg-soft: #f7f7fb;
+      --border: #e8e8f0;
+      --font: 'Manrope', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 18px 44px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(61, 61, 91, 0.12);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Rubik', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .topbar-contact {
+      margin-left: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      font-size: clamp(0.468rem, 1.32vw, 0.81rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--ink);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .topbar-contact a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%; right: -10%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(77,223,184,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -10%; left: -5%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,141,244,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.1s;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 24px; height: 2px;
+      background: var(--teal);
+      display: inline-block;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.25s;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--teal);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 400;
+      line-height: 1.75;
+      color: var(--ink-soft);
+      max-width: 580px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.4s;
+    }
+
+    .scroll-cue {
+      margin-top: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.6s;
+    }
+
+    .scroll-cue span {
+      width: 32px; height: 1px;
+      background: var(--ink-muted);
+      display: inline-block;
+    }
+
+    section { padding: 5rem 2rem; }
+
+    .container { max-width: 860px; margin: 0 auto; }
+
+    .problem-section { padding-top: 0; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 16px; height: 2px;
+      background: var(--pink);
+      display: inline-block;
+    }
+
+    .section-title {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+
+    .section-body {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--ink-soft);
+      max-width: 660px;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: 2.5rem;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .problem-card {
+      background: var(--bg);
+      padding: 1.75rem;
+      transition: background 0.2s;
+    }
+
+    .problem-card:hover { background: var(--bg-soft); }
+
+    .problem-card-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+
+    .problem-card p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--ink-soft);
+    }
+
+    .problem-banner {
+      width: calc(100% + 4rem);
+      aspect-ratio: 3.53 / 1;
+      overflow: hidden;
+      background: var(--bg-soft);
+      margin-bottom: 5rem;
+      margin-left: -2rem;
+      margin-right: -2rem;
+    }
+
+    .problem-banner img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+    }
+
+    .moments-section { background: var(--bg-soft); }
+
+    .moments-intro { margin-bottom: 2.5rem; }
+
+    .moments-tagline {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      line-height: 1.75;
+      margin-top: 0.75rem;
+      max-width: 560px;
+    }
+
+    .moments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .moment-card {
+      background: var(--bg);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .moment-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(61,61,91,0.08);
+    }
+
+    .moment-card-body { padding: 2rem 2rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+
+    .moment-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.5rem;
+    }
+
+    .moment-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.75rem;
+      color: var(--ink);
+    }
+
+    .moment-desc {
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: var(--ink-soft);
+      flex: 1;
+    }
+
+    .moment-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 1.25rem;
+    }
+
+    .pill {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 3px 10px;
+    }
+
+    .moment-meta {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .meta-weeks {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+    }
+
+    .meta-weeks strong {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      margin-top: 2px;
+    }
+
+    .meta-weeks-detail {
+      font-size: 10px;
+      color: var(--ink-muted);
+      margin-top: 3px;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .meta-price { text-align: right; }
+
+    .meta-price .price-amt {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .meta-price .price-igv {
+      font-size: 10px;
+      color: var(--ink-muted);
+      font-weight: 500;
+      display: block;
+      margin-top: 1px;
+    }
+
+    .moment-output { padding: 1.25rem 2rem; background: var(--bg-soft); border-top: 1px solid var(--border); }
+
+    .del-c {
+      border: 1px solid var(--border);
+      border-top: 2.5px solid var(--teal);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      background: var(--bg);
+      margin-bottom: 10px;
+    }
+
+    .del-c:last-child { margin-bottom: 0; }
+
+    .del-c-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+
+    .del-c strong {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .output-badge {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: #E1F5EE;
+      color: #0F6E56;
+      border-radius: 20px;
+      padding: 2px 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .del-c p {
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .footer-cta {
+      background: var(--ink);
+      color: white;
+      padding: 5rem 2rem;
+    }
+
+    .footer-cta .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-cta-text p {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.6);
+      max-width: 460px;
+      margin-top: 0.5rem;
+    }
+
+    .footer-cta-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: white;
+    }
+
+    .footer-cta-title span { color: var(--teal); }
+
+    .cta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      background: var(--teal);
+      border: none;
+      border-radius: 100px;
+      padding: 14px 24px;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .cta-link:hover { background: #3dcfa9; transform: translateY(-2px); }
+
+    .cta-link svg { width: 14px; height: 14px; transition: transform 0.2s; }
+    .cta-link:hover svg { transform: translateX(3px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 600px) {
+      .topbar { padding: 16px 1.25rem; gap: 1rem; }
+      .brand { font-size: 13px; }
+      .topbar-contact { font-size: clamp(0.432rem, 1.92vw, 0.57rem); }
+      .hero { padding: 5rem 1.25rem 3rem; }
+      section { padding: 3.5rem 1.25rem; }
+      .problem-banner {
+        width: calc(100% + 2.5rem);
+        margin-left: -1.25rem;
+        margin-right: -1.25rem;
+        margin-bottom: 3.5rem;
+      }
+      .problem-grid { grid-template-columns: 1fr; }
+      .footer-cta { padding: 3.5rem 1.25rem; }
+      .footer-cta .container { flex-direction: column; align-items: flex-start; }
+      .moment-meta { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .meta-price { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Chakakuna">CHAKAKUNA</a>
+    <div class="topbar-contact" aria-label="Contact information">
+      <a href="mailto:hola@chakakuna.com">hola@chakakuna.com</a>
+      <a href="https://chakakuna.com/" target="_blank" rel="noopener">chakakuna.com</a>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero-inner">
+      <div class="eyebrow">Service for Impact Enablers</div>
+      <h1 class="hero-title">Territorial intelligence<br>that <em>turns projects into impact</em></h1>
+      <p class="hero-sub">Impact projects have intention, methodology, and a team. What they sometimes lack is someone to verify whether it actually works for the people they aim to impact.</p>
+      <div class="scroll-cue"><span></span>Learn about the service</div>
+    </div>
+  </section>
+
+  <section class="problem-section">
+    <div class="problem-banner reveal">
+      <img src="img/territorial-intelligence.jpg" alt="Fieldwork team walking through a rural landscape">
+    </div>
+    <div class="container">
+      <p class="section-label reveal">The problem we solve</p>
+      <h2 class="section-title reveal">Projects are designed from behind a desk.<br>Impact happens somewhere else.</h2>
+      <p class="section-body reveal">Enablers fund rigorous, well-formulated projects with capable teams. But execution takes place in complex territories, with stakeholders who weren't always part of the initial diagnosis. Standard monitoring mechanisms, such as reports, baseline surveys, questionnaires, measure whether the project was implemented as planned. But they don't measure whether what was planned makes sense for the people receiving it.</p>
+      <div class="problem-grid reveal">
+        <div class="problem-card">
+          <p class="problem-card-num">01</p>
+          <p>Reports track activities but don't capture why something isn't being adopted.</p>
+        </div>
+        <div class="problem-card">
+          <p class="problem-card-num">02</p>
+          <p>Implementing organizations often struggle to see their own blind spots from within.</p>
+        </div>
+        <div class="problem-card">
+          <p class="problem-card-num">03</p>
+          <p>By the time the problem becomes visible, it's too late to correct course without affecting outcomes or budget.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="moments-section">
+    <div class="container">
+      <div class="moments-intro">
+        <p class="section-label reveal">How the service works</p>
+        <h2 class="section-title reveal">We step in at three moments of the project cycle.</h2>
+        <p class="moments-tagline reveal">We are not compliance evaluators. We are an external lens with territorial presence that helps ensure what is funded truly transforms.</p>
+      </div>
+      <div class="moments-grid">
+
+        <div class="moment-card reveal">
+          <div class="moment-card-body">
+            <p class="moment-tag">Before</p>
+            <h3 class="moment-title">Assumption check</h3>
+            <p class="moment-desc">Before execution begins, we review which project hypotheses are grounded in the actual territory and which need adjustment. Not to halt the project, but to get it off on the best possible footing.</p>
+            <div class="moment-pills">
+              <span class="pill">Tactical immersion</span>
+              <span class="pill">Situated interviews</span>
+            </div>
+            <div class="moment-meta">
+              <div class="meta-weeks">
+                Duration
+                <strong>2 weeks</strong>
+                <span class="meta-weeks-detail">1 week fieldwork · 1 week insights</span>
+              </div>
+              <div class="meta-price">
+                <span class="price-amt">USD 6,000</span>
+                <span class="price-igv">+ tax</span>
+              </div>
+            </div>
+          </div>
+          <div class="moment-output">
+            <div class="del-c">
+              <div class="del-c-top">
+                <strong>Ground-truth assumption map</strong>
+                <span class="output-badge">Output</span>
+              </div>
+              <p>A pre-launch report identifying which assumptions can stand and which need adjustment, with specific recommendations for the implementing team. Knowing this from the start saves costly mid-course corrections.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="moment-card reveal">
+          <div class="moment-card-body">
+            <p class="moment-tag">During</p>
+            <h3 class="moment-title">Territorial pulse</h3>
+            <p class="moment-desc">What's working, what's not, and why? A qualitative read of implementation in real time: we identify friction points, unforeseen variables, and concrete adjustments while there is still room to act.</p>
+            <div class="moment-pills">
+              <span class="pill">Impact exploration</span>
+              <span class="pill">Ethnography</span>
+            </div>
+            <div class="moment-meta">
+              <div class="meta-weeks">
+                Duration
+                <strong>4 weeks</strong>
+                <span class="meta-weeks-detail">1 week briefing · 1 week fieldwork · 2 weeks insights</span>
+              </div>
+              <div class="meta-price">
+                <span class="price-amt">USD 11,000</span>
+                <span class="price-igv">+ tax</span>
+              </div>
+            </div>
+          </div>
+          <div class="moment-output">
+            <div class="del-c">
+              <div class="del-c-top">
+                <strong>Early implementation alerts</strong>
+                <span class="output-badge">Output</span>
+              </div>
+              <p>Qualitative reports at key project milestones: what is hindering adoption, what is working better than expected, and what decisions to make now.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="moment-card reveal">
+          <div class="moment-card-body">
+            <p class="moment-tag">After</p>
+            <h3 class="moment-title">Evidence that endures</h3>
+            <p class="moment-desc">We build an impact narrative with verifiable evidence not of intention, but of lived experience. Ready for strategic communication, advocacy, and to support the next rounds of funding.</p>
+            <div class="moment-pills">
+              <span class="pill">Qualitative evaluation</span>
+              <span class="pill">Impact framework</span>
+            </div>
+            <div class="moment-meta">
+              <div class="meta-weeks">
+                Duration
+                <strong>4 weeks</strong>
+                <span class="meta-weeks-detail">1 week briefing · 1 week fieldwork · 2 weeks insights</span>
+              </div>
+              <div class="meta-price">
+                <span class="price-amt">USD 12,000</span>
+                <span class="price-igv">+ tax</span>
+              </div>
+            </div>
+          </div>
+          <div class="moment-output">
+            <div class="del-c">
+              <div class="del-c-top">
+                <strong>Verifiable impact narrative</strong>
+                <span class="output-badge">Output</span>
+              </div>
+              <p>Evidence of real change built from the voices and experiences of beneficiaries, not from logical framework indicators.</p>
+            </div>
+            <div class="del-c">
+              <div class="del-c-top">
+                <strong>Actionable learning brief</strong>
+                <span class="output-badge">Output</span>
+              </div>
+              <p>A concrete synthesis of what worked, what didn't, and why. Designed to improve the next funded project, not to be filed away.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="footer-cta">
+    <div class="container">
+      <div class="footer-cta-text">
+        <h2 class="footer-cta-title">Do you fund impact projects?<br><span>Let's talk.</span></h2>
+        <p>Chakakuna is a research and design consultancy with territorial presence in Peru and Latin America. We go where others don't, because the evidence that matters isn't behind a desk.</p>
+      </div>
+      <a href="https://calendar.app.google/NMXzr7U6BSYrxnKZA" target="_blank" class="cta-link">
+        Let's talk
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
