@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Convocatoria para pequeños negocios de Lima: participa en un proyecto de innovación y recibe recomendaciones prácticas y una compensación de S/ 1,000." />
+  <title>Convocatoria | Chakakuna</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Rubik:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #3D3D5B;
+      --pink: #FF8DF4;
+      --pink-soft: #FFF6FE;
+      --orange: #FDA946;
+      --orange-soft: #FFF5EE;
+      --mint: #4DDFB8;
+      --mint-soft: #ECFFFA;
+      --white: #FFFFFF;
+      --line: rgba(61, 61, 91, .12);
+      --shadow: 0 18px 60px rgba(61, 61, 91, .10);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--white);
+      font-family: "Manrope", sans-serif;
+      font-size: 11pt;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .eyebrow, .button, .badge {
+      font-family: "Rubik", sans-serif;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      font-size: clamp(2.65rem, 6vw, 5.35rem);
+      line-height: .98;
+      letter-spacing: -.055em;
+      margin-bottom: 28px;
+      max-width: 850px;
+    }
+    h2 {
+      font-size: clamp(2rem, 3.8vw, 3.35rem);
+      line-height: 1.08;
+      letter-spacing: -.035em;
+      margin-bottom: 18px;
+    }
+    h3 {
+      font-size: 1.25rem;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    p { max-width: 760px; }
+    a { color: inherit; }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max));
+      margin-inline: auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(255,255,255,.86);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-family: "Rubik", sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--mint-soft);
+      color: var(--ink);
+      border: 1px solid rgba(77,223,184,.5);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: white;
+      text-decoration: none;
+      font-family: "Rubik", sans-serif;
+      font-weight: 700;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(61,61,91,.2); }
+
+    .hero {
+      position: relative;
+      padding: 88px 0 74px;
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      background: var(--pink-soft);
+      right: -120px;
+      top: -150px;
+      z-index: -2;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: var(--orange-soft);
+      left: -130px;
+      bottom: -70px;
+      z-index: -2;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      align-items: center;
+      gap: 64px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: var(--mint-soft);
+      border: 1px solid rgba(77,223,184,.6);
+      font-size: .88rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .highlight { color: var(--mint); }
+    .highlight-pink { color: var(--pink); }
+    .highlight-orange { color: var(--orange); }
+
+    .hero-copy {
+      font-size: 1.08rem;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      min-height: 54px;
+      padding: 0 24px;
+      border: 0;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+
+    .button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(61,61,91,.16); }
+    .button-primary { background: var(--ink); color: white; }
+    .button-secondary { background: var(--mint-soft); color: var(--ink); border: 1px solid rgba(77,223,184,.65); }
+
+    .hero-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(145deg, var(--mint-soft), var(--pink-soft));
+      padding: 30px;
+      min-height: 470px;
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+    }
+    .hero-card::before {
+      width: 170px; height: 170px;
+      background: var(--orange);
+      opacity: .85;
+      top: -65px; right: -45px;
+    }
+    .hero-card::after {
+      width: 125px; height: 125px;
+      background: var(--pink);
+      opacity: .5;
+      bottom: -50px; left: -35px;
+    }
+
+    .illustration {
+      width: min(100%, 410px);
+      z-index: 1;
+    }
+
+    .selected-badge {
+      position: absolute;
+      z-index: 2;
+      bottom: 24px;
+      right: 24px;
+      padding: 12px 16px;
+      background: white;
+      border-radius: 16px;
+      font-family: "Rubik", sans-serif;
+      font-weight: 700;
+      box-shadow: 0 12px 30px rgba(61,61,91,.14);
+    }
+
+    .section { padding: 92px 0; }
+    .section-soft-mint { background: var(--mint-soft); }
+    .section-soft-pink { background: var(--pink-soft); }
+    .section-soft-orange { background: var(--orange-soft); }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 50px;
+      align-items: start;
+      margin-bottom: 42px;
+    }
+
+    .section-heading p { margin-bottom: 0; }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      padding: 28px;
+      border-radius: var(--radius-lg);
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 30px rgba(61,61,91,.06);
+    }
+
+    .card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+      background: var(--mint-soft);
+      border: 1px solid rgba(77,223,184,.45);
+    }
+
+    .note {
+      margin-top: 24px;
+      padding: 22px 24px;
+      border-radius: var(--radius-md);
+      background: var(--ink);
+      color: white;
+    }
+
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .benefit {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 26px 22px;
+      border: 1px solid var(--line);
+      min-height: 220px;
+    }
+
+    .benefit:nth-child(1) { box-shadow: inset 0 4px 0 var(--pink); }
+    .benefit:nth-child(2) { box-shadow: inset 0 4px 0 var(--mint); }
+    .benefit:nth-child(3) { box-shadow: inset 0 4px 0 var(--orange); }
+    .benefit:nth-child(4) { box-shadow: inset 0 4px 0 var(--pink); }
+
+    .benefit-number {
+      font-family: "Rubik", sans-serif;
+      font-size: 2.05rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .business-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .business {
+      text-align: center;
+      padding: 24px 14px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      transition: transform .2s ease;
+    }
+
+    .business:hover { transform: translateY(-4px); }
+    .business svg { width: 64px; height: 64px; margin-bottom: 12px; }
+    .business strong { font-family: "Rubik", sans-serif; display: block; line-height: 1.25; }
+
+    .criteria {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px 26px;
+    }
+
+    .check {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .check-mark {
+      flex: 0 0 auto;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--mint);
+      color: var(--ink);
+      font-weight: 900;
+      margin-top: 2px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 36px;
+    }
+
+    .step {
+      position: relative;
+      padding: 30px;
+      border-radius: var(--radius-lg);
+      background: white;
+      border: 1px solid var(--line);
+    }
+
+    .step-index {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--pink);
+      font-family: "Rubik", sans-serif;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .form-section {
+      padding: 92px 0;
+      background:
+        radial-gradient(circle at 10% 20%, var(--pink-soft), transparent 28%),
+        radial-gradient(circle at 90% 80%, var(--mint-soft), transparent 32%),
+        white;
+    }
+
+    .form-wrap {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .contact-card {
+      padding: 34px;
+      border-radius: var(--radius-xl);
+      background: var(--ink);
+      color: white;
+      position: sticky;
+      top: 102px;
+    }
+
+    .contact-card .mini {
+      display: inline-flex;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: var(--mint);
+      color: var(--ink);
+      font-family: "Rubik", sans-serif;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    form {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 34px;
+      box-shadow: var(--shadow);
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid rgba(61,61,91,.22);
+      border-radius: 14px;
+      padding: 14px 15px;
+      font: inherit;
+      color: var(--ink);
+      background: white;
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--mint);
+      box-shadow: 0 0 0 4px rgba(77,223,184,.16);
+    }
+
+    textarea { min-height: 110px; resize: vertical; }
+    .field { margin-bottom: 18px; }
+    .full { grid-column: 1 / -1; }
+
+    .privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .9rem;
+      margin: 6px 0 20px;
+    }
+
+    .privacy input { width: 18px; height: 18px; margin-top: 3px; }
+
+    .success {
+      display: none;
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: var(--mint-soft);
+      border: 1px solid rgba(77,223,184,.6);
+      font-weight: 700;
+    }
+
+    footer {
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+      background: white;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid,
+      .section-heading,
+      .form-wrap { grid-template-columns: 1fr; }
+      .hero-card { min-height: 380px; }
+      .benefit-grid { grid-template-columns: repeat(2, 1fr); }
+      .business-grid { grid-template-columns: repeat(3, 1fr); }
+      .contact-card { position: static; }
+    }
+
+    @media (max-width: 640px) {
+      .container { width: min(calc(100% - 24px), var(--max)); }
+      .nav-cta { display: none; }
+      .hero { padding-top: 58px; }
+      .section { padding: 68px 0; }
+      .card-grid,
+      .benefit-grid,
+      .criteria,
+      .steps,
+      .field-grid { grid-template-columns: 1fr; }
+      .business-grid { grid-template-columns: repeat(2, 1fr); }
+      .button { width: 100%; }
+      form, .contact-card { padding: 24px; }
+      h1 { font-size: clamp(2.5rem, 15vw, 4rem); }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#inicio" aria-label="Chakakuna, inicio">
+        <span class="brand-mark">✦</span>
+        <span>Chakakuna</span>
+      </a>
+      <a class="nav-cta" href="#postula">Postular mi negocio</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Convocatoria abierta · Lima</div>
+          <h1>Participa en un proyecto de <span class="highlight">innovación</span></h1>
+          <p class="hero-copy">
+            Estamos desarrollando un proyecto de investigación e innovación para comprender cómo funcionan los pequeños negocios en su operación cotidiana y diseñar nuevas soluciones que realmente respondan a sus necesidades.
+          </p>
+          <p class="hero-copy">
+            Seleccionaremos un grupo reducido de negocios en Lima para trabajar junto a ellos durante <strong>cuatro días consecutivos</strong>.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#postula">Quiero participar</a>
+            <a class="button button-secondary" href="https://wa.me/51974706179" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+          </div>
+        </div>
+
+        <div class="hero-card" aria-label="Ilustración de un equipo trabajando junto con un pequeño negocio">
+          <svg class="illustration" viewBox="0 0 460 410" role="img" aria-hidden="true">
+            <circle cx="230" cy="200" r="165" fill="#FFF6FE"/>
+            <circle cx="350" cy="70" r="58" fill="#FDA946"/>
+            <rect x="58" y="250" width="344" height="110" rx="28" fill="#ECFFFA" stroke="#3D3D5B" stroke-width="4"/>
+            <rect x="158" y="210" width="145" height="92" rx="12" fill="#FFFFFF" stroke="#3D3D5B" stroke-width="4"/>
+            <path d="M170 227h121l-13 60h-95z" fill="#4DDFB8" opacity=".6"/>
+            <circle cx="145" cy="146" r="42" fill="#FDA946"/>
+            <path d="M112 144c6-36 59-47 73-9-12-6-24-7-37-3-13 4-23 11-36 12z" fill="#3D3D5B"/>
+            <rect x="113" y="183" width="70" height="96" rx="32" fill="#FF8DF4"/>
+            <circle cx="313" cy="146" r="42" fill="#FDA946"/>
+            <path d="M280 142c8-39 60-45 74-7-16-5-31-4-45 1-10 4-18 7-29 6z" fill="#3D3D5B"/>
+            <rect x="278" y="183" width="70" height="96" rx="32" fill="#4DDFB8"/>
+            <circle cx="229" cy="128" r="44" fill="#FDA946"/>
+            <path d="M190 128c6-43 70-48 81-7-21-6-45-4-81 7z" fill="#3D3D5B"/>
+            <rect x="192" y="171" width="74" height="98" rx="34" fill="#FFF5EE" stroke="#3D3D5B" stroke-width="4"/>
+            <path d="M131 159c8 11 18 15 28 0M215 141c9 12 20 12 30 0M299 159c8 11 19 15 29 0" fill="none" stroke="#3D3D5B" stroke-width="4" stroke-linecap="round"/>
+            <path d="M165 223l34 20M294 223l-29 20" stroke="#3D3D5B" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="229" cy="246" r="8" fill="#FF8DF4"/>
+          </svg>
+          <div class="selected-badge">Solo 5 negocios seleccionados</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft-mint" id="que-haremos">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">La experiencia</div>
+            <h2>¿Qué haremos?</h2>
+          </div>
+          <p>
+            Nuestro equipo acompañará el funcionamiento normal del negocio. No iremos como auditores ni fiscalizadores: trabajaremos contigo para comprender la operación real e identificar oportunidades de mejora.
+          </p>
+        </div>
+
+        <div class="card-grid">
+          <article class="card">
+            <div class="card-icon">👀</div>
+            <h3>Observar la operación cotidiana</h3>
+            <p>Conoceremos cómo se organiza el trabajo, cómo se toman decisiones y cómo se resuelven los problemas del día a día.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">💬</div>
+            <h3>Conversar contigo</h3>
+            <p>Hablaremos periódicamente con el propietario para comprender sus decisiones, prioridades y formas de trabajo.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">🧩</div>
+            <h3>Comprender los procesos</h3>
+            <p>Reconstruiremos el funcionamiento real del negocio e identificaremos puntos donde pequeñas mejoras puedan generar valor.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon">✨</div>
+            <h3>Probar mejoras</h3>
+            <p>Podremos proponer y probar pequeñas mejoras junto con el dueño para entender qué funciona mejor en la práctica.</p>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Nuestro objetivo no es evaluar el desempeño del negocio.</strong> Queremos aprender cómo operan realmente los pequeños emprendimientos y construir soluciones útiles para ellos.
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft-pink" id="beneficios">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Beneficios</div>
+            <h2>¿Qué recibirá el negocio?</h2>
+          </div>
+          <p>Al finalizar la experiencia, cada negocio participante recibirá resultados concretos construidos a partir de su propia operación.</p>
+        </div>
+
+        <div class="benefit-grid">
+          <article class="benefit">
+            <div class="benefit-number highlight-pink">01</div>
+            <h3>Hallazgos de diagnóstico</h3>
+            <p>Una lectura clara de los principales patrones y fricciones observados.</p>
+          </article>
+          <article class="benefit">
+            <div class="benefit-number highlight">02</div>
+            <h3>Recomendaciones prácticas</h3>
+            <p>Mejoras adaptadas a la realidad y posibilidades del negocio.</p>
+          </article>
+          <article class="benefit">
+            <div class="benefit-number highlight-orange">03</div>
+            <h3>Conversación de devolución</h3>
+            <p>Una sesión directa con nuestro equipo para revisar lo aprendido.</p>
+          </article>
+          <article class="benefit">
+            <div class="benefit-number highlight-pink">S/1,000</div>
+            <h3>Compensación económica</h3>
+            <p>Por el tiempo y la apertura dedicados al proyecto.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="participacion">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Participación</div>
+            <h2>¿Qué implica participar?</h2>
+          </div>
+          <p>El proyecto requiere la colaboración del propietario durante aproximadamente cuatro días consecutivos.</p>
+        </div>
+
+        <div class="criteria">
+          <div class="check"><span class="check-mark">✓</span><span>El negocio seguirá funcionando normalmente.</span></div>
+          <div class="check"><span class="check-mark">✓</span><span>Nuestro equipo trabajará dentro del local o en los alrededores.</span></div>
+          <div class="check"><span class="check-mark">✓</span><span>Conversaremos contigo para comprender decisiones y validar ideas.</span></div>
+          <div class="check"><span class="check-mark">✓</span><span>Procuraremos no interferir con la operación natural del negocio.</span></div>
+        </div>
+
+        <div class="note">
+          Toda la información será tratada con <strong>absoluta confidencialidad</strong> y utilizada únicamente para los fines del proyecto.
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft-orange" id="negocios">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Perfiles buscados</div>
+            <h2>¿Qué negocios estamos buscando?</h2>
+          </div>
+          <p>Buscamos pequeños negocios ubicados en Lima que pertenezcan a alguno de los siguientes rubros.</p>
+        </div>
+
+        <div class="business-grid">
+          <div class="business">
+            <svg viewBox="0 0 80 80" aria-hidden="true"><path d="M16 50h48M21 50a19 19 0 0 1 38 0M40 23v-5" fill="none" stroke="#3D3D5B" stroke-width="4" stroke-linecap="round"/><circle cx="40" cy="17" r="3" fill="#4DDFB8"/></svg>
+            <strong>Restaurante</strong>
+          </div>
+          <div class="business">
+            <svg viewBox="0 0 80 80" aria-hidden="true"><path d="M18 28h47l-6 30H26zM20 28l-3-9h-7M31 64a4 4 0 1 0 0 .1M55 64a4 4 0 1 0 0 .1" fill="none" stroke="#3D3D5B" stroke-width="4" stroke-linecap="round"/></svg>
+            <strong>Minimarket o bodega</strong>
+          </div>
+          <div class="business">
+            <svg viewBox="0 0 80 80" aria-hidden="true"><rect x="20" y="17" width="40" height="49" rx="6" fill="none" stroke="#3D3D5B" stroke-width="4"/><circle cx="40" cy="45" r="13" fill="#ECFFFA" stroke="#3D3D5B" stroke-width="4"/><path d="M28 25h2M36 25h2M44 25h8" stroke="#3D3D5B" stroke-width="4" stroke-linecap="round"/></svg>
+            <strong>Lavandería</strong>
+          </div>
+          <div class="business">
+            <svg viewBox="0 0 80 80" aria-hidden="true"><path d="M20 19h35v47H20zM55 27h8v20h-8M27 35h20M36 19v-6M29 57h18" fill="none" stroke="#3D3D5B" stroke-width="4" stroke-linecap="round"/></svg>
+            <strong>Taller de costura</strong>
+          </div>
+          <div class="business">
+            <svg viewBox="0 0 80 80" aria-hidden="true"><path d="M20 18l40 45M60 18L20 63M25 23a8 8 0 1 0 .1 0M55 23a8 8 0 1 0 .1 0" fill="none" stroke="#3D3D5B" stroke-width="4" stroke-linecap="round"/></svg>
+            <strong>Centro de belleza</strong>
+          </div>
+        </div>
+
+        <div class="criteria">
+          <div class="check"><span class="check-mark">✓</span><span>El propietario participa activamente en la operación diaria.</span></div>
+          <div class="check"><span class="check-mark">✓</span><span>El negocio funciona en un local fijo.</span></div>
+          <div class="check"><span class="check-mark">✓</span><span>Trabajan al menos dos personas.</span></div>
+          <div class="check"><span class="check-mark">✓</span><span>Existe disposición para colaborar durante los cuatro días.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft-pink" id="seleccion">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Proceso</div>
+            <h2>¿Cómo será la selección?</h2>
+          </div>
+          <p>Los cupos son limitados. Seleccionaremos los negocios que mejor se ajusten a los criterios y necesidades del proyecto.</p>
+        </div>
+
+        <div class="steps">
+          <article class="step">
+            <div class="step-index">1</div>
+            <h3>Completa el formulario</h3>
+            <p>Cuéntanos brevemente sobre tu negocio, ubicación y forma de trabajo.</p>
+          </article>
+          <article class="step">
+            <div class="step-index">2</div>
+            <h3>Conversamos contigo</h3>
+            <p>Podremos realizar una llamada para conocer mejor el negocio y resolver dudas.</p>
+          </article>
+          <article class="step">
+            <div class="step-index">3</div>
+            <h3>Confirmamos la selección</h3>
+            <p>Contactaremos directamente a los negocios elegidos para coordinar los siguientes pasos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-section" id="postula">
+      <div class="container form-wrap">
+        <aside class="contact-card">
+          <span class="mini">Postulación</span>
+          <h2>¿Te interesa participar?</h2>
+          <p>Completa el formulario y nos pondremos en contacto contigo.</p>
+          <p><strong>También puedes escribirnos:</strong><br>WhatsApp: 974 706 179</p>
+        </aside>
+
+        <form id="applicationForm">
+          <h3>Quiero postular mi negocio</h3>
+          <p>Completa estos datos. No implica una selección automática.</p>
+
+          <div class="field-grid">
+            <div class="field">
+              <label for="nombre">Nombre completo</label>
+              <input id="nombre" name="nombre" type="text" required>
+            </div>
+            <div class="field">
+              <label for="negocio">Nombre del negocio</label>
+              <input id="negocio" name="negocio" type="text" required>
+            </div>
+            <div class="field">
+              <label for="telefono">Celular / WhatsApp</label>
+              <input id="telefono" name="telefono" type="tel" inputmode="numeric" required>
+            </div>
+            <div class="field">
+              <label for="distrito">Distrito</label>
+              <input id="distrito" name="distrito" type="text" required>
+            </div>
+            <div class="field">
+              <label for="rubro">Rubro</label>
+              <select id="rubro" name="rubro" required>
+                <option value="">Selecciona una opción</option>
+                <option>Restaurante</option>
+                <option>Minimarket o bodega</option>
+                <option>Lavandería</option>
+                <option>Taller de costura</option>
+                <option>Centro de belleza</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="personas">¿Cuántas personas trabajan?</label>
+              <input id="personas" name="personas" type="number" min="1" required>
+            </div>
+            <div class="field full">
+              <label for="detalle">Cuéntanos brevemente cómo funciona tu negocio</label>
+              <textarea id="detalle" name="detalle" placeholder="Horarios, participación del propietario, años de funcionamiento, etc."></textarea>
+            </div>
+          </div>
+
+          <label class="privacy">
+            <input type="checkbox" required>
+            <span>Acepto que estos datos sean utilizados únicamente para evaluar mi participación y contactarme sobre el proyecto.</span>
+          </label>
+
+          <button class="button button-primary" type="submit">Enviar por WhatsApp</button>
+          <div class="success" id="successMessage">Abriremos WhatsApp con tu postulación lista para enviar.</div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <strong class="brand">Chakakuna</strong>
+      <span>Equipo de diseño · Proyecto de innovación</span>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.getElementById('applicationForm');
+    const success = document.getElementById('successMessage');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const data = new FormData(form);
+      const message = [
+        'Hola, quiero postular mi negocio al proyecto de innovación.',
+        '',
+        '*Nombre:* ' + data.get('nombre'),
+        '*Negocio:* ' + data.get('negocio'),
+        '*Celular:* ' + data.get('telefono'),
+        '*Distrito:* ' + data.get('distrito'),
+        '*Rubro:* ' + data.get('rubro'),
+        '*Personas que trabajan:* ' + data.get('personas'),
+        '*Descripción:* ' + (data.get('detalle') || 'No indicada')
+      ].join('\n');
+
+      success.style.display = 'block';
+      const url = 'https://wa.me/51974706179?text=' + encodeURIComponent(message);
+      window.open(url, '_blank', 'noopener');
+    });
+  </script>
+</body>
+</html>
